@@ -1,5 +1,6 @@
 // @refresh reload
 
+import { registerBuiltInPreviewers } from "@opencode-ai/ui/pierre/previewers"
 import {
   ACCEPTED_FILE_EXTENSIONS,
   ACCEPTED_FILE_TYPES,
@@ -14,6 +15,8 @@ import {
   ServerConnection,
   useCommand,
 } from "@opencode-ai/app"
+
+registerBuiltInPreviewers()
 import * as Sentry from "@sentry/solid"
 import type { AsyncStorage } from "@solid-primitives/storage"
 import { MemoryRouter } from "@solidjs/router"

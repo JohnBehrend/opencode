@@ -2,6 +2,7 @@
 
 import * as Sentry from "@sentry/solid"
 import { render } from "solid-js/web"
+import { registerBuiltInPreviewers } from "@opencode-ai/ui/pierre/previewers"
 import { AppBaseProviders, AppInterface } from "@/app"
 import { type Platform, PlatformProvider } from "@/context/platform"
 import { dict as en } from "@/i18n/en"
@@ -10,6 +11,8 @@ import { handleNotificationClick } from "@/utils/notification-click"
 import { authFromToken } from "@/utils/server"
 import pkg from "../package.json"
 import { ServerConnection } from "./context/server"
+
+registerBuiltInPreviewers()
 
 const DEFAULT_SERVER_URL_KEY = "opencode.settings.dat:defaultServerUrl"
 

@@ -81,17 +81,8 @@ const binary = new Set([
   "o",
   "a",
   "lib",
-  "wav",
-  "mp3",
-  "ogg",
-  "oga",
   "ogv",
   "ogx",
-  "flac",
-  "aac",
-  "wma",
-  "m4a",
-  "weba",
   "mp4",
   "avi",
   "mov",
@@ -195,6 +186,19 @@ const image = new Set([
   "x3f",
 ])
 
+const audio = new Set([
+  "wav",
+  "mp3",
+  "ogg",
+  "oga",
+  "flac",
+  "aac",
+  "wma",
+  "m4a",
+  "opus",
+  "weba",
+])
+
 const text = new Set([
   "ts",
   "tsx",
@@ -268,6 +272,16 @@ const mime: Record<string, string> = {
   jxl: "image/jxl",
   heic: "image/heic",
   heif: "image/heif",
+  wav: "audio/wav",
+  mp3: "audio/mpeg",
+  ogg: "audio/ogg",
+  oga: "audio/ogg",
+  flac: "audio/flac",
+  aac: "audio/aac",
+  wma: "audio/x-ms-wma",
+  m4a: "audio/mp4",
+  opus: "audio/opus",
+  weba: "audio/webm",
 }
 
 type Entry = { files: string[]; dirs: string[] }
@@ -275,11 +289,14 @@ type Entry = { files: string[]; dirs: string[] }
 const ext = (file: string) => path.extname(file).toLowerCase().slice(1)
 const name = (file: string) => path.basename(file).toLowerCase()
 const isImageByExtension = (file: string) => image.has(ext(file))
+const isAudioByExtension = (file: string) => audio.has(ext(file))
 const isTextByExtension = (file: string) => text.has(ext(file))
 const isTextByName = (file: string) => textName.has(name(file))
 const isBinaryByExtension = (file: string) => binary.has(ext(file))
 const isImage = (mimeType: string) => mimeType.startsWith("image/")
+const isAudio = (mimeType: string) => mimeType.startsWith("audio/")
 const getImageMimeType = (file: string) => mime[ext(file)] || "image/" + ext(file)
+const getAudioMimeType = (file: string) => mime[ext(file)] || "audio/" + ext(file)
 
 function shouldEncode(mimeType: string) {
   const type = mimeType.toLowerCase()
@@ -518,6 +535,20 @@ export const layer = Layer.effect(
         return { type: "text" as const, content: "" }
       }
 
+      if (isAudioByExtension(file)) {
+        const exists = yield* appFs.existsSafe(full)
+        if (exists) {
+          const bytes = yield* appFs.readFile(full).pipe(Effect.catch(() => Effect.succeed(new Uint8Array())))
+          return {
+            type: "text" as const,
+            content: Buffer.from(bytes).toString("base64"),
+            mimeType: getAudioMimeType(file),
+            encoding: "base64" as const,
+          }
+        }
+        return { type: "text" as const, content: "" }
+      }
+
       const knownText = isTextByExtension(file) || isTextByName(file)
 
       if (isBinaryByExtension(file) && !knownText) return { type: "binary" as const, content: "" }
@@ -528,7 +559,7 @@ export const layer = Layer.effect(
       const mimeType = AppFileSystem.mimeType(full)
       const encode = knownText ? false : shouldEncode(mimeType)
 
-      if (encode && !isImage(mimeType)) return { type: "binary" as const, content: "", mimeType }
+      if (encode && !isImage(mimeType) && !isAudio(mimeType)) return { type: "binary" as const, content: "", mimeType }
 
       if (encode) {
         const bytes = yield* appFs.readFile(full).pipe(Effect.catch(() => Effect.succeed(new Uint8Array())))

@@ -3,12 +3,14 @@ import { createEffect, createMemo, createResource, Match, on, Show, Switch, type
 import { useI18n } from "../context/i18n"
 import {
   dataUrlFromMediaValue,
+  fileExtension,
   hasMediaValue,
   isBinaryContent,
   mediaKindFromPath,
   normalizeMimeType,
   svgTextFromValue,
 } from "../pierre/media"
+import { resolvePreviewer, type PreviewerContext } from "../pierre/previewer"
 
 export type FileMediaOptions = {
   mode?: "auto" | "off"
@@ -19,28 +21,35 @@ export type FileMediaOptions = {
   deleted?: boolean
   readFile?: (path: string) => Promise<FileContent | undefined>
   onLoad?: () => void
-  onError?: (ctx: { kind: "image" | "audio" | "svg" }) => void
+  onError?: (ctx: { kind: "image" | "audio" | "svg" | string }) => void
 }
 
-function mediaValue(cfg: FileMediaOptions, mode: "image" | "audio") {
+function mediaValue(cfg: FileMediaOptions) {
   if (cfg.current !== undefined) return cfg.current
-  if (mode === "image") return cfg.after ?? cfg.before
   return cfg.after ?? cfg.before
 }
 
 export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX.Element }) {
   const i18n = useI18n()
   const cfg = () => props.media
-  const kind = createMemo(() => {
+
+  const previewer = createMemo(() => {
     const media = cfg()
     if (!media || media.mode === "off") return
-    return mediaKindFromPath(media.path)
+    return resolvePreviewer(media.path)
+  })
+
+  const svgKind = createMemo(() => {
+    const media = cfg()
+    if (!media || media.mode === "off") return
+    if (previewer()) return
+    return mediaKindFromPath(media.path) === "svg" ? "svg" : undefined
   })
 
   const isBinary = createMemo(() => {
     const media = cfg()
     if (!media || media.mode === "off") return false
-    if (kind()) return false
+    if (previewer() || svgKind()) return false
     return isBinaryContent(media.current as any)
   })
 
@@ -48,33 +57,38 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
 
   const deleted = createMemo(() => {
     const media = cfg()
-    const k = kind()
-    if (!media || !k) return false
+    if (!media) return false
     if (media.deleted) return true
-    if (k === "svg") return false
     if (media.current !== undefined) return false
     return !hasMediaValue(media.after as any) && hasMediaValue(media.before as any)
   })
 
+  const previewerKind = createMemo(() => {
+    const p = previewer()
+    if (!p) return
+    const ext = fileExtension(cfg()?.path)
+    return { id: p.id, ext }
+  })
+
   const direct = createMemo(() => {
     const media = cfg()
-    const k = kind()
-    if (!media || (k !== "image" && k !== "audio")) return
-    return dataUrlFromMediaValue(mediaValue(media, k), k)
+    const pk = previewerKind()
+    if (!media || !pk) return
+    return dataUrlFromMediaValue(mediaValue(media), pk.ext as "image" | "audio")
   })
 
   const request = createMemo(() => {
     const media = cfg()
-    const k = kind()
-    if (!media || (k !== "image" && k !== "audio")) return
+    const pk = previewerKind()
+    if (!media || !pk) return
     if (media.current !== undefined) return
     if (deleted()) return
     if (direct()) return
     if (!media.path || !media.readFile) return
 
     return {
-      key: `${k}:${media.path}`,
-      kind: k,
+      key: `${pk.id}:${media.path}`,
+      kind: pk.ext as "image" | "audio",
       path: media.path,
       readFile: media.readFile,
       onError: media.onError,
@@ -84,7 +98,8 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
   const [loaded] = createResource(request, async (input) => {
     return input.readFile(input.path).then(
       (result) => {
-        const src = dataUrlFromMediaValue(result as any, input.kind)
+        const kind = input.kind as "image" | "audio"
+        const src = dataUrlFromMediaValue(result as any, kind)
         if (!src) {
           input.onError?.({ kind: input.kind })
           return { key: input.key, error: true as const }
@@ -93,7 +108,7 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
         return {
           key: input.key,
           src,
-          mime: input.kind === "audio" ? normalizeMimeType(result?.mimeType) : undefined,
+          mime: kind === "audio" ? normalizeMimeType(result?.mimeType) : undefined,
         }
       },
       () => {
@@ -122,24 +137,24 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
     if (src()) return "ready" as const
     return "idle" as const
   })
-  const audioMime = createMemo(() => {
+  const mimeType = createMemo(() => {
     const value = remote()
     return value && "mime" in value ? value.mime : undefined
   })
 
   const svgSource = createMemo(() => {
     const media = cfg()
-    if (!media || kind() !== "svg") return
+    if (!media || svgKind() !== "svg") return
     return svgTextFromValue(media.current as any)
   })
   const svgSrc = createMemo(() => {
     const media = cfg()
-    if (!media || kind() !== "svg") return
+    if (!media || svgKind() !== "svg") return
     return dataUrlFromMediaValue(media.current as any, "svg")
   })
   const svgInvalid = createMemo(() => {
     const media = cfg()
-    if (!media || kind() !== "svg") return
+    if (!media || svgKind() !== "svg") return
     if (svgSource() !== undefined) return
     if (!hasMediaValue(media.current as any)) return
     return [media.path, media.current] as const
@@ -156,75 +171,69 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
     ),
   )
 
-  const kindLabel = (value: "image" | "audio") =>
-    i18n.t(value === "image" ? "ui.fileMedia.kind.image" : "ui.fileMedia.kind.audio")
+  const kindLabel = (value: "image" | "audio" | string) => {
+    const p = previewer()
+    if (p?.label) return p.label
+    return i18n.t(value === "image" ? "ui.fileMedia.kind.image" : "ui.fileMedia.kind.audio")
+  }
 
   return (
     <Switch>
-      <Match when={kind() === "image" || kind() === "audio"}>
-        <Show
-          when={src()}
-          fallback={(() => {
-            const media = cfg()
-            const k = kind()
-            if (!media || (k !== "image" && k !== "audio")) return props.fallback()
-            const label = kindLabel(k)
+      <Match when={previewer()}>
+        {(p) => {
+          const previewerInstance = p()!
+          return (
+            <Show
+              when={src()}
+              fallback={(() => {
+                const media = cfg()
+                if (!media) return props.fallback()
+                const label = kindLabel(previewerInstance.id)
 
-            if (deleted()) {
-              return (
-                <div class="flex min-h-40 items-center justify-center px-6 py-4 text-center text-text-weak">
-                  {i18n.t("ui.fileMedia.state.removed", { kind: label })}
-                </div>
-              )
-            }
-            if (status() === "loading") {
-              return (
-                <div class="flex min-h-40 items-center justify-center px-6 py-4 text-center text-text-weak">
-                  {i18n.t("ui.fileMedia.state.loading", { kind: label })}
-                </div>
-              )
-            }
-            if (status() === "error") {
-              return (
-                <div class="flex min-h-40 items-center justify-center px-6 py-4 text-center text-text-weak">
-                  {i18n.t("ui.fileMedia.state.error", { kind: label })}
-                </div>
-              )
-            }
-            return (
-              <div class="flex min-h-40 items-center justify-center px-6 py-4 text-center text-text-weak">
-                {i18n.t("ui.fileMedia.state.unavailable", { kind: label })}
-              </div>
-            )
-          })()}
-        >
-          {(value) => {
-            const k = kind()
-            if (k !== "image" && k !== "audio") return props.fallback()
-            if (k === "image") {
-              return (
-                <div class="flex justify-center bg-background-stronger px-6 py-4">
-                  <img
-                    src={value()}
-                    alt={cfg()?.path}
-                    class="max-h-[60vh] max-w-full rounded border border-border-weak-base bg-background-base object-contain"
-                    onLoad={onLoad}
-                  />
-                </div>
-              )
-            }
-
-            return (
-              <div class="flex justify-center bg-background-stronger px-6 py-4">
-                <audio class="w-full max-w-xl" controls preload="metadata" onLoadedMetadata={onLoad}>
-                  <source src={value()} type={audioMime()} />
-                </audio>
-              </div>
-            )
-          }}
-        </Show>
+                if (deleted()) {
+                  return (
+                    <div class="flex min-h-40 items-center justify-center px-6 py-4 text-center text-text-weak">
+                      {i18n.t("ui.fileMedia.state.removed", { kind: label })}
+                    </div>
+                  )
+                }
+                if (status() === "loading") {
+                  return (
+                    <div class="flex min-h-40 items-center justify-center px-6 py-4 text-center text-text-weak">
+                      {i18n.t("ui.fileMedia.state.loading", { kind: label })}
+                    </div>
+                  )
+                }
+                if (status() === "error") {
+                  return (
+                    <div class="flex min-h-40 items-center justify-center px-6 py-4 text-center text-text-weak">
+                      {i18n.t("ui.fileMedia.state.error", { kind: label })}
+                    </div>
+                  )
+                }
+                return (
+                  <div class="flex min-h-40 items-center justify-center px-6 py-4 text-center text-text-weak">
+                    {i18n.t("ui.fileMedia.state.unavailable", { kind: label })}
+                  </div>
+                )
+              })()}
+            >
+              {(value) => {
+                const ctx: PreviewerContext = {
+                  path: cfg()?.path ?? "",
+                  src: value(),
+                  mimeType: mimeType(),
+                  content: cfg()?.current as FileContent | undefined,
+                  onLoad,
+                  onError: () => cfg()?.onError?.({ kind: previewerInstance.id }),
+                }
+                return previewerInstance.render(ctx)
+              }}
+            </Show>
+          )
+        }}
       </Match>
-      <Match when={kind() === "svg"}>
+      <Match when={svgKind() === "svg"}>
         {(() => {
           if (svgSource() === undefined && svgSrc() == null) return props.fallback()
 
