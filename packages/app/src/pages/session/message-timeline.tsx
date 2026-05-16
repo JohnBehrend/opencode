@@ -209,7 +209,9 @@ function createTimelineStaging(input: TimelineStageInput) {
 
 export function MessageTimeline(props: {
   mobileChanges: boolean
+  mobileFiles: boolean
   mobileFallback: JSX.Element
+  mobileFilesFallback: JSX.Element
   actions?: UserActions
   scroll: { overflow: boolean; bottom: boolean; jump: boolean }
   onResumeScroll: () => void
@@ -625,8 +627,14 @@ export function MessageTimeline(props: {
 
   return (
     <Show
-      when={!props.mobileChanges}
-      fallback={<div class="relative h-full overflow-hidden">{props.mobileFallback}</div>}
+      when={!props.mobileChanges && !props.mobileFiles}
+      fallback={
+        props.mobileFiles ? (
+          <div class="relative h-full overflow-hidden">{props.mobileFilesFallback}</div>
+        ) : (
+          <div class="relative h-full overflow-hidden">{props.mobileFallback}</div>
+        )
+      }
     >
       <div class="relative w-full h-full min-w-0">
         <div

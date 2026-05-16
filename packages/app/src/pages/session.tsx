@@ -51,6 +51,7 @@ import {
   shouldFocusTerminalOnKeyDown,
 } from "@/pages/session/helpers"
 import { MessageTimeline } from "@/pages/session/message-timeline"
+import { MobileFileBrowser } from "@/pages/session/mobile-file-browser"
 import { type DiffStyle, SessionReviewTab, type SessionReviewTabProps } from "@/pages/session/review-tab"
 import { useSessionLayout } from "@/pages/session/session-layout"
 import { syncSessionModel } from "@/pages/session/session-model-helpers"
@@ -513,7 +514,7 @@ export default function Page() {
 
   const [store, setStore] = createStore({
     messageId: undefined as string | undefined,
-    mobileTab: "session" as "session" | "changes",
+    mobileTab: "session" as "session" | "changes" | "files",
     changes: "git" as ChangeMode,
     newSessionWorktree: "main",
     deferRender: false,
@@ -583,6 +584,7 @@ export default function Page() {
     return list
   })
   const mobileChanges = createMemo(() => !isDesktop() && store.mobileTab === "changes")
+  const mobileFiles = createMemo(() => !isDesktop() && store.mobileTab === "files")
   const wantsReview = createMemo(() =>
     isDesktop()
       ? desktopFileTreeOpen() || (desktopReviewOpen() && activeTab() === "review")
@@ -1797,7 +1799,7 @@ export default function Page() {
             <Tabs.List>
               <Tabs.Trigger
                 value="session"
-                class="!w-1/2 !max-w-none"
+                class="!w-1/3 !max-w-none"
                 classes={{ button: "w-full" }}
                 onClick={() => setStore("mobileTab", "session")}
               >
@@ -1805,13 +1807,21 @@ export default function Page() {
               </Tabs.Trigger>
               <Tabs.Trigger
                 value="changes"
-                class="!w-1/2 !max-w-none !border-r-0"
+                class="!w-1/3 !max-w-none"
                 classes={{ button: "w-full" }}
                 onClick={() => setStore("mobileTab", "changes")}
               >
                 {hasReview()
                   ? language.t("session.review.filesChanged", { count: reviewCount() })
                   : language.t("session.review.change.other")}
+              </Tabs.Trigger>
+              <Tabs.Trigger
+                value="files"
+                class="!w-1/3 !max-w-none !border-l-0"
+                classes={{ button: "w-full" }}
+                onClick={() => setStore("mobileTab", "files")}
+              >
+                {language.t("session.files.all")}
               </Tabs.Trigger>
             </Tabs.List>
           </Tabs>
@@ -1834,6 +1844,7 @@ export default function Page() {
                 <Show when={messagesReady()}>
                   <MessageTimeline
                     mobileChanges={mobileChanges()}
+                    mobileFiles={mobileFiles()}
                     mobileFallback={reviewContent({
                       diffStyle: "unified",
                       classes: {
@@ -1844,6 +1855,7 @@ export default function Page() {
                       loadingClass: "px-4 py-4 text-text-weak",
                       emptyClass: "h-full pb-64 -mt-4 flex flex-col items-center justify-center text-center gap-6",
                     })}
+                    mobileFilesFallback={<MobileFileBrowser />}
                     actions={actions}
                     scroll={ui.scroll}
                     onResumeScroll={resumeScroll}
