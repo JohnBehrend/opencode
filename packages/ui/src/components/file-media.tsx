@@ -12,6 +12,8 @@ import {
 } from "../pierre/media"
 import { resolvePreviewer, type PreviewerContext } from "../pierre/previewer"
 
+const audioExtensions = new Set(["mp3", "wav", "ogg", "m4a", "aac", "flac", "opus", "m4b"])
+
 export type FileMediaOptions = {
   mode?: "auto" | "off"
   path?: string
@@ -74,7 +76,8 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
   const streamUrl = createMemo(() => {
     const media = cfg()
     const pk = previewerKind()
-    if (!media || !pk || pk.ext !== "audio") return
+    if (!media || !pk) return
+    if (pk.ext !== "m4b" && !audioExtensions.has(pk.ext)) return
     if (!media.baseServerUrl || !media.path) return
     return `${media.baseServerUrl}/file/audio?path=${encodeURIComponent(media.path)}`
   })
