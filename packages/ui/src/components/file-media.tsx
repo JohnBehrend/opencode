@@ -86,6 +86,7 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
     const media = cfg()
     const pk = previewerKind()
     if (!media || !pk) return
+    if (pk.ext === "m4b") return
     return dataUrlFromMediaValue(mediaValue(media), pk.ext as "image" | "audio")
   })
 

@@ -195,6 +195,7 @@ const audio = new Set([
   "aac",
   "wma",
   "m4a",
+  "m4b",
   "opus",
   "weba",
 ])
@@ -280,6 +281,7 @@ const mime: Record<string, string> = {
   aac: "audio/aac",
   wma: "audio/x-ms-wma",
   m4a: "audio/mp4",
+  m4b: "audio/mp4",
   opus: "audio/opus",
   weba: "audio/webm",
 }
