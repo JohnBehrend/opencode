@@ -14,6 +14,7 @@ import { ScrollView } from "@opencode-ai/ui/scroll-view"
 import { showToast } from "@opencode-ai/ui/toast"
 import { selectionFromLines, useFile, type FileSelection, type SelectedLineRange } from "@/context/file"
 import { useComments } from "@/context/comments"
+import { useSDK } from "@/context/sdk"
 import { useLanguage } from "@/context/language"
 import { usePrompt } from "@/context/prompt"
 import { getSessionHandoff } from "@/pages/session/handoff"
@@ -172,6 +173,7 @@ function createScrollSync(input: { tab: () => string; view: ReturnType<typeof us
 }
 
 export function FileTabContent(props: { tab: string }) {
+  const sdk = useSDK()
   const file = useFile()
   const comments = useComments()
   const language = useLanguage()
@@ -427,6 +429,7 @@ export function FileTabContent(props: { tab: string }) {
           mode: "auto",
           path: path(),
           current: state()?.content,
+          baseServerUrl: sdk.url,
           onLoad: scrollSync.queueRestore,
           onError: (args: { kind: "image" | "audio" | "svg" }) => {
             if (args.kind !== "svg") return

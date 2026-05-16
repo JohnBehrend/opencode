@@ -1,9 +1,15 @@
 import * as InstanceState from "@/effect/instance-state"
 import { File } from "@/file"
 import { Ripgrep } from "@/file/ripgrep"
-import { Effect } from "effect"
+import { AppFileSystem } from "@opencode-ai/core/filesystem"
+import { Effect, Stream } from "effect"
 import { HttpApiBuilder } from "effect/unstable/httpapi"
+import { HttpClient, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect/unstable/http"
 import { InstanceHttpApi } from "../api"
+import { HttpApiProxy } from "../middleware/proxy"
+import { getWorkspaceRouteSessionID, workspaceProxyURL } from "@/server/shared/workspace-routing"
+import { Session } from "@/session/session"
+import { join, relative, basename } from "path"
 
 export const fileHandlers = HttpApiBuilder.group(InstanceHttpApi, "file", (handlers) =>
   Effect.gen(function* () {
@@ -52,3 +58,89 @@ export const fileHandlers = HttpApiBuilder.group(InstanceHttpApi, "file", (handl
       .handle("status", status)
   }),
 )
+
+export const audioStreamRoute = HttpRouter.use((router) =>
+  Effect.gen(function* () {
+    const client = yield* HttpClient.HttpClient
+    const session = yield* Session.Service
+    yield* router.add(
+      "GET",
+      "/file/audio",
+      Effect.gen(function* () {
+        const request = yield* HttpServerRequest.HttpServerRequest
+        const url = new URL(request.url, "http://localhost")
+        const filePath = url.searchParams.get("path")
+        if (!filePath) return HttpServerResponse.text("Missing path parameter", { status: 400 })
+
+        const sessionID = getWorkspaceRouteSessionID(url)
+        const sessionWorkspaceID = sessionID ? (yield* session.get(sessionID)).workspaceID : undefined
+        const proxyURL = workspaceProxyURL("http://localhost", url)
+        if (proxyURL) {
+          return yield* HttpApiProxy.http(client, proxyURL, undefined, request)
+        }
+
+        const ctx = yield* InstanceState.context
+        const full = join(ctx.directory, filePath)
+        const rel = relative(ctx.directory, full)
+        if (rel.startsWith("..") || rel === "") {
+          return HttpServerResponse.text("Access denied", { status: 403 })
+        }
+
+        const fs = yield* AppFileSystem.Service
+        const exists = yield* fs.existsSafe(full).pipe(Effect.catch(() => Effect.succeed(false)))
+        if (!exists) return HttpServerResponse.text("File not found", { status: 404 })
+
+        const stat = yield* fs.stat(full).pipe(Effect.catch(() => Effect.void))
+        const size = stat?.type === "File" ? Number(stat.size) : undefined
+        const mimeType = AppFileSystem.mimeType(full)
+        const filename = basename(full)
+
+        const rangeHeader = request.headers["range"]
+        const range = parseRange(rangeHeader, size)
+
+        if (range && size) {
+          const [start, end] = range
+          const length = end - start + 1
+          const bytes = yield* fs.readFile(full).pipe(
+            Effect.catch(() => Effect.succeed(new Uint8Array())),
+          )
+          const chunk = bytes.slice(start, end + 1)
+
+          return HttpServerResponse.stream(Stream.make(chunk), {
+            status: 206,
+            contentType: mimeType,
+            headers: {
+              "content-range": `bytes ${start}-${end}/${size}`,
+              "content-length": String(length),
+              "accept-ranges": "bytes",
+              "content-disposition": `inline; filename="${filename}"`,
+            },
+          })
+        }
+
+        const bytes = yield* fs.readFile(full).pipe(
+          Effect.catch(() => Effect.succeed(new Uint8Array())),
+        )
+
+        return HttpServerResponse.stream(Stream.make(bytes), {
+          contentType: mimeType,
+          headers: {
+            "accept-ranges": "bytes",
+            "content-length": size ? String(size) : "",
+            "content-disposition": `inline; filename="${filename}"`,
+          },
+        })
+      }),
+    )
+  }),
+)
+
+function parseRange(header: string | undefined, size: number | undefined): [number, number] | null {
+  if (!header || !size) return null
+  const match = header.match(/^bytes=(\d+)-(\d+)?$/)
+  if (!match) return null
+  const start = parseInt(match[1], 10)
+  const end = match[2] ? parseInt(match[2], 10) : size - 1
+  if (isNaN(start) || isNaN(end) || start < 0 || end >= size || start > end) return null
+  return [start, end]
+}

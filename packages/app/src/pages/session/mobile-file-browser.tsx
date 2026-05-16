@@ -47,6 +47,7 @@ export function MobileFileBrowser(props: {
           mode: "auto",
           path: p,
           current: state.content,
+          baseServerUrl: sdk.url,
           readFile,
         }}
       />

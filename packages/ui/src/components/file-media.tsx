@@ -20,6 +20,7 @@ export type FileMediaOptions = {
   after?: unknown
   deleted?: boolean
   readFile?: (path: string) => Promise<FileContent | undefined>
+  baseServerUrl?: string
   onLoad?: () => void
   onError?: (ctx: { kind: "image" | "audio" | "svg" | string }) => void
 }
@@ -70,6 +71,14 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
     return { id: p.id, ext }
   })
 
+  const streamUrl = createMemo(() => {
+    const media = cfg()
+    const pk = previewerKind()
+    if (!media || !pk || pk.ext !== "audio") return
+    if (!media.baseServerUrl || !media.path) return
+    return `${media.baseServerUrl}/file/audio?path=${encodeURIComponent(media.path)}`
+  })
+
   const direct = createMemo(() => {
     const media = cfg()
     const pk = previewerKind()
@@ -84,6 +93,7 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
     if (media.current !== undefined) return
     if (deleted()) return
     if (direct()) return
+    if (streamUrl()) return
     if (!media.path || !media.readFile) return
 
     return {
@@ -127,10 +137,11 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
 
   const src = createMemo(() => {
     const value = remote()
-    return direct() ?? (value && "src" in value ? value.src : undefined)
+    return direct() ?? streamUrl() ?? (value && "src" in value ? value.src : undefined)
   })
   const status = createMemo(() => {
     if (direct()) return "ready" as const
+    if (streamUrl()) return "ready" as const
     if (!request()) return "idle" as const
     if (loaded.loading) return "loading" as const
     if (remote()?.error) return "error" as const

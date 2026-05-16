@@ -116,6 +116,7 @@ export interface SessionReviewProps {
   diffs: RawReviewDiff[]
   onViewFile?: (file: string) => void
   readFile?: (path: string) => Promise<FileContent | undefined>
+  baseServerUrl?: string
   lineCommentMention?: LineCommentEditorProps["mention"]
 }
 
@@ -629,12 +630,13 @@ export const SessionReview = (props: SessionReviewProps) => {
                                     renderHoverUtility={props.onLineComment ? commentsUi.renderHoverUtility : undefined}
                                     selectedLines={selectedLines()}
                                     commentedLines={commentedLines()}
-                                    media={{
-                                      mode: "auto",
-                                      path: file,
-                                      deleted: diff.status === "deleted",
-                                      readFile: diff.status === "deleted" ? undefined : props.readFile,
-                                    }}
+                                     media={{
+                                       mode: "auto",
+                                       path: file,
+                                       deleted: diff.status === "deleted",
+                                       baseServerUrl: props.baseServerUrl,
+                                       readFile: diff.status === "deleted" ? undefined : props.readFile,
+                                     }}
                                   />
                                 </Match>
                               </Switch>
