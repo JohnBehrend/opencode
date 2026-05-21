@@ -138,7 +138,7 @@ export const createOpenSessionFileTab = (input: {
     const path = input.pathFromTab(next)
     if (!path) return
 
-    input.loadFile(path)
+    if (!path.endsWith(".m4b")) input.loadFile(path)
     input.openReviewPanel()
     input.setActive(next)
   }
