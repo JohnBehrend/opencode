@@ -87,6 +87,7 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
     const pk = previewerKind()
     if (!media || !pk) return
     if (pk.ext === "m4b") return
+    if (audioExtensions.has(pk.ext)) return
     return dataUrlFromMediaValue(mediaValue(media), pk.ext as "image" | "audio")
   })
 
@@ -154,7 +155,12 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
   })
   const mimeType = createMemo(() => {
     const value = remote()
-    return value && "mime" in value ? value.mime : undefined
+    if (value && "mime" in value) return value.mime
+    const media = cfg()
+    if (!media?.current) return
+    const current = media.current as any
+    if (typeof current?.mimeType === "string") return normalizeMimeType(current.mimeType)
+    return
   })
 
   const svgSource = createMemo(() => {
