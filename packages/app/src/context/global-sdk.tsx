@@ -3,7 +3,7 @@ import { createSimpleContext } from "@opencode-ai/ui/context"
 import { createGlobalEmitter } from "@solid-primitives/event-bus"
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { batch, onCleanup, onMount } from "solid-js"
-import { createSdkForServer } from "@/utils/server"
+import { authTokenFromCredentials, createSdkForServer } from "@/utils/server"
 import { useLanguage } from "./language"
 import { usePlatform } from "./platform"
 import { useServer } from "./server"
@@ -232,8 +232,15 @@ export const { use: useGlobalSDK, provider: GlobalSDKProvider } = createSimpleCo
       throwOnError: true,
     })
 
+    const authToken = (() => {
+      const h = currentServer.http
+      if (!h.password) return
+      return authTokenFromCredentials({ username: h.username, password: h.password })
+    })()
+
     return {
       url: currentServer.http.url,
+      authToken: authHeader,
       client: sdk,
       event: {
         on: emitter.on.bind(emitter),

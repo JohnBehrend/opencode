@@ -23,6 +23,7 @@ export type FileMediaOptions = {
   deleted?: boolean
   readFile?: (path: string) => Promise<FileContent | undefined>
   baseServerUrl?: string
+  authToken?: string
   onLoad?: () => void
   onError?: (ctx: { kind: "image" | "audio" | "svg" | string }) => void
 }
@@ -79,7 +80,9 @@ export function FileMedia(props: { media?: FileMediaOptions; fallback: () => JSX
     if (!media || !pk) return
     if (pk.ext !== "m4b" && !audioExtensions.has(pk.ext)) return
     if (!media.baseServerUrl || !media.path) return
-    return `${media.baseServerUrl}/file/audio?path=${encodeURIComponent(media.path)}`
+    const url = `${media.baseServerUrl}/file/audio?path=${encodeURIComponent(media.path)}`
+    if (media.authToken) return `${url}&auth_token=${encodeURIComponent(media.authToken)}`
+    return url
   })
 
   const direct = createMemo(() => {

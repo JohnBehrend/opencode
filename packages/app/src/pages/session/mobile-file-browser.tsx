@@ -53,6 +53,7 @@ export function MobileFileBrowser(props: {
           path: p,
           current: state?.content,
           baseServerUrl: sdk.url,
+          authToken: sdk.authToken,
           readFile,
         }}
       />
