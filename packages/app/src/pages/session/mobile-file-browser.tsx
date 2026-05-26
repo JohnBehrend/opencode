@@ -29,10 +29,15 @@ export function MobileFileBrowser(props: {
     return file.get(p)
   })
 
+  const isM4b = createMemo(() => {
+    const p = selected()
+    return p?.endsWith(".m4b") ?? false
+  })
+
   const renderFile = () => {
     const p = selected()
     const state = selectedState()
-    if (!p || !state) return null
+    if (!p) return null
 
     return (
       <Dynamic
@@ -40,13 +45,13 @@ export function MobileFileBrowser(props: {
         mode="text"
         file={{
           name: p,
-          contents: state.content?.content ?? "",
-          cacheKey: state.content?.content ?? "",
+          contents: state?.content?.content ?? "",
+          cacheKey: state?.content?.content ?? "",
         }}
         media={{
           mode: "auto",
           path: p,
-          current: state.content,
+          current: state?.content,
           baseServerUrl: sdk.url,
           readFile,
         }}
@@ -57,6 +62,7 @@ export function MobileFileBrowser(props: {
   const handleFileClick = (node: { path: string; type: string }) => {
     if (node.type === "file") {
       setSelectedPath(node.path)
+      if (!node.path.endsWith(".m4b")) file.load(node.path)
     }
   }
 
@@ -98,18 +104,32 @@ function FileTreeMobile(props: {
   onFileClick: (node: { path: string; type: string }) => void
 }) {
   const file = useFile()
+  const language = useLanguage()
 
   createEffect(() => {
     const dir = file.tree.state(props.path)
-    if (!dir?.expanded && !dir?.loaded) {
+    if (!dir?.loaded && !dir?.loading) {
       void file.tree.list(props.path)
     }
   })
 
+  const dirState = createMemo(() => file.tree.state(props.path))
   const nodes = createMemo(() => file.tree.children(props.path))
+  const isLoading = createMemo(() => dirState()?.loading === true)
+  const isLoaded = createMemo(() => dirState()?.loaded === true)
 
   return (
     <div class="flex flex-col gap-0.5">
+      <Show when={isLoading()}>
+        <div class="px-4 py-2 text-12-regular text-text-weak">
+          {language.t("common.loading")}...
+        </div>
+      </Show>
+      <Show when={isLoaded() && nodes().length === 0}>
+        <div class="px-4 py-2 text-12-regular text-text-weak">
+          {language.t("session.files.selectToOpen")}
+        </div>
+      </Show>
       {nodes().map((node) => {
         const expanded = () => file.tree.state(node.path)?.expanded ?? false
 
