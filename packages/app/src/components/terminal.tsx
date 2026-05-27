@@ -4,7 +4,9 @@ import { resolveThemeVariant } from "@opencode-ai/ui/theme/resolve"
 import type { HexColor } from "@opencode-ai/ui/theme/types"
 import { showToast } from "@opencode-ai/ui/toast"
 import type { FitAddon, Ghostty, Terminal as Term } from "ghostty-web"
-import { type ComponentProps, createEffect, createMemo, onCleanup, onMount, splitProps } from "solid-js"
+import { type ComponentProps, createEffect, createMemo, onCleanup, onMount, Show, splitProps } from "solid-js"
+import { createMediaQuery } from "@solid-primitives/media"
+import { IconButton } from "@opencode-ai/ui/icon-button"
 import { SerializeAddon } from "@/addons/serialize"
 import { matchKeybind, parseKeybind } from "@/context/command"
 import { useLanguage } from "@/context/language"
@@ -161,6 +163,7 @@ export const Terminal = (props: TerminalProps) => {
   const theme = useTheme()
   const language = useLanguage()
   const server = useServer()
+  const isDesktop = createMediaQuery("(min-width: 768px)")
   const directory = sdk.directory
   const client = sdk.client
   const url = sdk.url
@@ -398,6 +401,16 @@ export const Terminal = (props: TerminalProps) => {
       serializeAddon = serializer
 
       t.open(container)
+
+      // Disable autocorrect/spellcheck on mobile to prevent browser interference
+      if (t.textarea) {
+        t.textarea.setAttribute("autocorrect", "off")
+        t.textarea.setAttribute("autocomplete", "off")
+        t.textarea.setAttribute("spellcheck", "false")
+        t.textarea.setAttribute("inputmode", "text")
+        t.textarea.setAttribute("autocapitalize", "none")
+      }
+
       useTerminalUiBindings({
         container,
         term: t,
@@ -648,20 +661,52 @@ export const Terminal = (props: TerminalProps) => {
     output.flush(finalize)
   })
 
+  // Send key sequences from mobile toolbar buttons
+  const sendInput = (data: string) => {
+    if (ws?.readyState === WebSocket.OPEN) ws.send(data)
+  }
+
   return (
-    <div
-      ref={container}
-      data-component="terminal"
-      data-prevent-autofocus
-      tabIndex={-1}
-      style={{ "background-color": terminalColors().background }}
-      classList={{
-        ...local.classList,
-        "select-text": true,
-        "size-full px-6 py-3 font-mono relative overflow-hidden": true,
-        [local.class ?? ""]: !!local.class,
-      }}
-      {...others}
-    />
+    <div class="relative size-full overflow-hidden" style={{ "touch-action": "none" }}>
+      <div
+        ref={container}
+        data-component="terminal"
+        data-prevent-autofocus
+        tabIndex={-1}
+        style={{ "background-color": terminalColors().background }}
+        classList={{
+          ...local.classList,
+          "select-text": true,
+          "size-full px-6 py-3 font-mono relative overflow-hidden": true,
+          [local.class ?? ""]: !!local.class,
+        }}
+        {...others}
+      />
+      <Show when={!isDesktop()}>
+        <div class="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-2 p-2 bg-background-stronger/80 backdrop-blur-sm border-t border-border-weaker-base">
+          <IconButton
+            icon="arrow-up"
+            variant="ghost"
+            size="small"
+            aria-label="Scroll up"
+            onClick={() => sendInput("\x1b[A")}
+          />
+          <IconButton
+            icon="chevron-down"
+            variant="ghost"
+            size="small"
+            aria-label="Scroll down"
+            onClick={() => sendInput("\x1b[B")}
+          />
+          <IconButton
+            icon="console"
+            variant="ghost"
+            size="small"
+            aria-label="Ctrl+C"
+            onClick={() => sendInput("\x03")}
+          />
+        </div>
+      </Show>
+    </div>
   )
 }
