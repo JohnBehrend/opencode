@@ -4,11 +4,8 @@ import { Ripgrep } from "@/file/ripgrep"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
 import { Effect, Stream } from "effect"
 import { HttpApiBuilder } from "effect/unstable/httpapi"
-import { HttpClient, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect/unstable/http"
+import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect/unstable/http"
 import { InstanceHttpApi } from "../api"
-import { HttpApiProxy } from "../middleware/proxy"
-import { getWorkspaceRouteSessionID, workspaceProxyURL } from "@/server/shared/workspace-routing"
-import { Session } from "@/session/session"
 import { join, relative, basename } from "path"
 
 export const fileHandlers = HttpApiBuilder.group(InstanceHttpApi, "file", (handlers) =>
@@ -61,8 +58,6 @@ export const fileHandlers = HttpApiBuilder.group(InstanceHttpApi, "file", (handl
 
 export const audioStreamRoute = HttpRouter.use((router) =>
   Effect.gen(function* () {
-    const client = yield* HttpClient.HttpClient
-    const session = yield* Session.Service
     yield* router.add(
       "GET",
       "/file/audio",
@@ -71,13 +66,6 @@ export const audioStreamRoute = HttpRouter.use((router) =>
         const url = new URL(request.url, "http://localhost")
         const filePath = url.searchParams.get("path")
         if (!filePath) return HttpServerResponse.text("Missing path parameter", { status: 400 })
-
-        const sessionID = getWorkspaceRouteSessionID(url)
-        const sessionWorkspaceID = sessionID ? (yield* session.get(sessionID)).workspaceID : undefined
-        const proxyURL = workspaceProxyURL("http://localhost", url)
-        if (proxyURL) {
-          return yield* HttpApiProxy.http(client, proxyURL, undefined, request)
-        }
 
         const ctx = yield* InstanceState.context
         const full = join(ctx.directory, filePath)
@@ -95,15 +83,16 @@ export const audioStreamRoute = HttpRouter.use((router) =>
         const mimeType = AppFileSystem.mimeType(full)
         const filename = basename(full)
 
+        const bytes = yield* fs.readFile(full).pipe(
+          Effect.catch(() => Effect.succeed(new Uint8Array())),
+        )
+
         const rangeHeader = request.headers["range"]
         const range = parseRange(rangeHeader, size)
 
-        if (range && size) {
+        if (range && size && bytes.length > 0) {
           const [start, end] = range
           const length = end - start + 1
-          const bytes = yield* fs.readFile(full).pipe(
-            Effect.catch(() => Effect.succeed(new Uint8Array())),
-          )
           const chunk = bytes.slice(start, end + 1)
 
           return HttpServerResponse.stream(Stream.make(chunk), {
@@ -117,10 +106,6 @@ export const audioStreamRoute = HttpRouter.use((router) =>
             },
           })
         }
-
-        const bytes = yield* fs.readFile(full).pipe(
-          Effect.catch(() => Effect.succeed(new Uint8Array())),
-        )
 
         return HttpServerResponse.stream(Stream.make(bytes), {
           contentType: mimeType,

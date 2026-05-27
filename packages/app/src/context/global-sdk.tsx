@@ -7,6 +7,7 @@ import { authTokenFromCredentials, createSdkForServer } from "@/utils/server"
 import { useLanguage } from "./language"
 import { usePlatform } from "./platform"
 import { useServer } from "./server"
+import { createMemo } from "solid-js"
 
 const isAbortError = (error: unknown) =>
   error !== null && typeof error === "object" && "name" in error && error.name === "AbortError"
@@ -232,15 +233,19 @@ export const { use: useGlobalSDK, provider: GlobalSDKProvider } = createSimpleCo
       throwOnError: true,
     })
 
-    const authToken = (() => {
-      const h = currentServer.http
-      if (!h.password) return
+    const authToken = createMemo(() => {
+      const h = server.current?.http
+      if (!h?.password) return
       return authTokenFromCredentials({ username: h.username, password: h.password })
-    })()
+    })
 
     return {
-      url: currentServer.http.url,
-      authToken,
+      get url() {
+        return server.current?.http.url ?? ""
+      },
+      get authToken() {
+        return authToken()
+      },
       client: sdk,
       event: {
         on: emitter.on.bind(emitter),

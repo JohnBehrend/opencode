@@ -403,13 +403,20 @@ export const Terminal = (props: TerminalProps) => {
       t.open(container)
 
       // Disable autocorrect/spellcheck on mobile to prevent browser interference
-      if (t.textarea) {
-        t.textarea.setAttribute("autocorrect", "off")
-        t.textarea.setAttribute("autocomplete", "off")
-        t.textarea.setAttribute("spellcheck", "false")
-        t.textarea.setAttribute("inputmode", "text")
-        t.textarea.setAttribute("autocapitalize", "none")
+      const disableAutocorrect = (el?: HTMLTextAreaElement | null) => {
+        if (!el) return
+        el.setAttribute("autocorrect", "off")
+        el.setAttribute("autocomplete", "off")
+        el.setAttribute("spellcheck", "false")
+        el.setAttribute("inputmode", "text")
+        el.setAttribute("autocapitalize", "none")
+        el.setAttribute("data-gramm", "false")
+        el.setAttribute("data-enable-grammarly", "false")
+        el.setAttribute("data-no-gramme", "true")
       }
+      disableAutocorrect(t.textarea)
+      // Retry after a frame in case the textarea is recreated
+      requestAnimationFrame(() => disableAutocorrect(t.textarea))
 
       useTerminalUiBindings({
         container,
