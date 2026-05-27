@@ -1,9 +1,9 @@
 ---
-description: Swap inference backend between SGLang (MiMo) and vLLM (Qwen3) on port 2136
+description: Switch inference backend between SGLang (MiMo) and vLLM (Qwen3) on port 2136
 subtask: true
 ---
 
-Swap the active inference backend. The user must specify the target.
+Switch the active inference backend. The user must specify the target.
 
 Run the script with the target backend:
 
