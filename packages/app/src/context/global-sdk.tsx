@@ -240,7 +240,7 @@ export const { use: useGlobalSDK, provider: GlobalSDKProvider } = createSimpleCo
 
     return {
       url: currentServer.http.url,
-      authToken: authHeader,
+      authToken,
       client: sdk,
       event: {
         on: emitter.on.bind(emitter),
