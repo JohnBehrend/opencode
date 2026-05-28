@@ -40,6 +40,7 @@ import { usePrompt } from "@/context/prompt"
 import { useSDK } from "@/context/sdk"
 import { useSettings } from "@/context/settings"
 import { useSync } from "@/context/sync"
+import { Terminal } from "@/components/terminal"
 import { useTerminal } from "@/context/terminal"
 import { type FollowupDraft, sendFollowupDraft } from "@/components/prompt-input/submit"
 import { createSessionComposerState, SessionComposerRegion } from "@/pages/session/composer"
@@ -514,7 +515,7 @@ export default function Page() {
 
   const [store, setStore] = createStore({
     messageId: undefined as string | undefined,
-    mobileTab: "session" as "session" | "changes" | "files",
+    mobileTab: "session" as "session" | "changes" | "files" | "terminal",
     changes: "git" as ChangeMode,
     newSessionWorktree: "main",
     deferRender: false,
@@ -1799,7 +1800,7 @@ export default function Page() {
             <Tabs.List>
               <Tabs.Trigger
                 value="session"
-                class="!w-1/3 !max-w-none"
+                class="!w-1/4 !max-w-none"
                 classes={{ button: "w-full" }}
                 onClick={() => setStore("mobileTab", "session")}
               >
@@ -1807,7 +1808,7 @@ export default function Page() {
               </Tabs.Trigger>
               <Tabs.Trigger
                 value="changes"
-                class="!w-1/3 !max-w-none"
+                class="!w-1/4 !max-w-none"
                 classes={{ button: "w-full" }}
                 onClick={() => setStore("mobileTab", "changes")}
               >
@@ -1817,11 +1818,19 @@ export default function Page() {
               </Tabs.Trigger>
               <Tabs.Trigger
                 value="files"
-                class="!w-1/3 !max-w-none !border-l-0"
+                class="!w-1/4 !max-w-none"
                 classes={{ button: "w-full" }}
                 onClick={() => setStore("mobileTab", "files")}
               >
                 {language.t("session.files.all")}
+              </Tabs.Trigger>
+              <Tabs.Trigger
+                value="terminal"
+                class="!w-1/4 !max-w-none !border-l-0"
+                classes={{ button: "w-full" }}
+                onClick={() => setStore("mobileTab", "terminal")}
+              >
+                {language.t("terminal.title")}
               </Tabs.Trigger>
             </Tabs.List>
           </Tabs>
@@ -1840,6 +1849,28 @@ export default function Page() {
         >
           <div class="flex-1 min-h-0 overflow-hidden">
             <Switch>
+              <Match when={store.mobileTab === "terminal" && !isDesktop()}>
+                <Show when={terminal.active()} keyed>
+                  {(id) => {
+                    const ops = terminal.bind()
+                    return (
+                      <Show when={terminal.all().find((pty) => pty.id === id)} keyed>
+                        {(pty) => (
+                          <div class="h-full w-full">
+                            <Terminal
+                              pty={pty()}
+                              autoFocus={true}
+                              onConnect={() => {}}
+                              onCleanup={ops.update}
+                              onConnectError={() => {}}
+                            />
+                          </div>
+                        )}
+                      </Show>
+                    )
+                  }}
+                </Show>
+              </Match>
               <Match when={params.id}>
                 <Show when={messagesReady()}>
                   <MessageTimeline
@@ -1973,7 +2004,9 @@ export default function Page() {
         />
       </div>
 
-      <TerminalPanel />
+      <Show when={isDesktop()}>
+        <TerminalPanel />
+      </Show>
     </div>
   )
 }
