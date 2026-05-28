@@ -1850,26 +1850,7 @@ export default function Page() {
           <div class="flex-1 min-h-0 overflow-hidden">
             <Switch>
               <Match when={store.mobileTab === "terminal" && !isDesktop()}>
-                <Show when={terminal.active()} keyed>
-                  {(id) => {
-                    const ops = terminal.bind()
-                    return (
-                      <Show when={terminal.all().find((pty) => pty.id === id)} keyed>
-                        {(pty) => (
-                          <div class="h-full w-full">
-                            <Terminal
-                              pty={pty()}
-                              autoFocus={true}
-                              onConnect={() => {}}
-                              onCleanup={ops.update}
-                              onConnectError={() => {}}
-                            />
-                          </div>
-                        )}
-                      </Show>
-                    )
-                  }}
-                </Show>
+                <TerminalPanel forceOpened />
               </Match>
               <Match when={params.id}>
                 <Show when={messagesReady()}>
@@ -1923,7 +1904,8 @@ export default function Page() {
             </Switch>
           </div>
 
-          <SessionComposerRegion
+          <Show when={!(store.mobileTab === "terminal" && !isDesktop())}>
+            <SessionComposerRegion
             state={composer}
             ready={!store.deferRender && messagesReady()}
             centered={centered()}
@@ -1972,6 +1954,7 @@ export default function Page() {
               promptDock = el
             }}
           />
+          </Show>
 
           <Show when={desktopReviewOpen()}>
             <div onPointerDown={() => size.start()}>

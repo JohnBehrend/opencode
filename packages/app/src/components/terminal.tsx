@@ -720,7 +720,7 @@ export const Terminal = (props: TerminalProps) => {
           onClick={preventFocus}
         >
           <IconButton
-            icon="arrow-up"
+            icon="chevron-up"
             variant="ghost"
             size="small"
             aria-label="History up"
@@ -733,13 +733,13 @@ export const Terminal = (props: TerminalProps) => {
             aria-label="History down"
             onClick={() => sendInput("\x1b[B")}
           />
-          <IconButton
-            icon="console"
-            variant="ghost"
-            size="small"
+          <button
+            class="text-sm font-mono px-2 py-1 rounded hover:bg-surface-base text-text-base"
             aria-label="Ctrl+C"
             onClick={() => sendInput("\x03")}
-          />
+          >
+            ^C
+          </button>
         </div>
       </Show>
     </div>
