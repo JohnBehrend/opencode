@@ -673,6 +673,10 @@ export const Terminal = (props: TerminalProps) => {
     if (ws?.readyState === WebSocket.OPEN) ws.send(data)
   }
 
+  const preventFocus = (e: Event) => {
+    e.stopPropagation()
+  }
+
   return (
     <div class="relative size-full overflow-hidden" style={{ "touch-action": "none" }}>
       <div
@@ -690,7 +694,11 @@ export const Terminal = (props: TerminalProps) => {
         {...others}
       />
       <Show when={!isDesktop()}>
-        <div class="absolute right-0 top-0 z-10 flex flex-col items-center gap-1 p-2 bg-background-stronger/80 backdrop-blur-sm border-l border-border-weaker-base">
+        <div
+          class="absolute right-0 top-0 z-10 flex flex-col items-center gap-1 p-2 bg-background-stronger/80 backdrop-blur-sm border-l border-border-weaker-base"
+          onPointerDown={preventFocus}
+          onClick={preventFocus}
+        >
           <IconButton
             icon="arrow-up"
             variant="ghost"
@@ -706,7 +714,11 @@ export const Terminal = (props: TerminalProps) => {
             onClick={() => sendInput("\x1b[6~")}
           />
         </div>
-        <div class="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-2 p-2 bg-background-stronger/80 backdrop-blur-sm border-t border-border-weaker-base">
+        <div
+          class="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-2 p-2 bg-background-stronger/80 backdrop-blur-sm border-t border-border-weaker-base"
+          onPointerDown={preventFocus}
+          onClick={preventFocus}
+        >
           <IconButton
             icon="console"
             variant="ghost"
