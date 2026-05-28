@@ -690,21 +690,23 @@ export const Terminal = (props: TerminalProps) => {
         {...others}
       />
       <Show when={!isDesktop()}>
-        <div class="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-2 p-2 bg-background-stronger/80 backdrop-blur-sm border-t border-border-weaker-base">
+        <div class="absolute right-0 top-0 z-10 flex flex-col items-center gap-1 p-2 bg-background-stronger/80 backdrop-blur-sm border-l border-border-weaker-base">
           <IconButton
             icon="arrow-up"
             variant="ghost"
             size="small"
             aria-label="Scroll up"
-            onClick={() => sendInput("\x1b[A")}
+            onClick={() => sendInput("\x1b[5~")}
           />
           <IconButton
             icon="chevron-down"
             variant="ghost"
             size="small"
             aria-label="Scroll down"
-            onClick={() => sendInput("\x1b[B")}
+            onClick={() => sendInput("\x1b[6~")}
           />
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-2 p-2 bg-background-stronger/80 backdrop-blur-sm border-t border-border-weaker-base">
           <IconButton
             icon="console"
             variant="ghost"
