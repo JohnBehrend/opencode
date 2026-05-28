@@ -720,6 +720,20 @@ export const Terminal = (props: TerminalProps) => {
           onClick={preventFocus}
         >
           <IconButton
+            icon="arrow-up"
+            variant="ghost"
+            size="small"
+            aria-label="History up"
+            onClick={() => sendInput("\x1b[A")}
+          />
+          <IconButton
+            icon="chevron-down"
+            variant="ghost"
+            size="small"
+            aria-label="History down"
+            onClick={() => sendInput("\x1b[B")}
+          />
+          <IconButton
             icon="console"
             variant="ghost"
             size="small"
