@@ -158,8 +158,6 @@ export function SessionReviewTab(props: SessionReviewTabProps) {
       onViewFile={props.onViewFile}
       focusedFile={props.focusedFile}
       readFile={readFile}
-      baseServerUrl={sdk.url}
-      authToken={sdk.authToken}
       onLineComment={props.onLineComment}
       onLineCommentUpdate={props.onLineCommentUpdate}
       onLineCommentDelete={props.onLineCommentDelete}

@@ -116,8 +116,6 @@ export interface SessionReviewProps {
   diffs: RawReviewDiff[]
   onViewFile?: (file: string) => void
   readFile?: (path: string) => Promise<FileContent | undefined>
-  baseServerUrl?: string
-  authToken?: string
   lineCommentMention?: LineCommentEditorProps["mention"]
 }
 
@@ -635,8 +633,6 @@ export const SessionReview = (props: SessionReviewProps) => {
                                         mode: "auto",
                                         path: file,
                                         deleted: diff.status === "deleted",
-                                        baseServerUrl: props.baseServerUrl,
-                                        authToken: props.authToken,
                                         readFile: diff.status === "deleted" ? undefined : props.readFile,
                                       }}
                                   />

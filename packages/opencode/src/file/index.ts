@@ -195,7 +195,6 @@ const audio = new Set([
   "aac",
   "wma",
   "m4a",
-  "m4b",
   "opus",
   "weba",
 ])

@@ -431,8 +431,6 @@ export function FileTabContent(props: { tab: string }) {
           mode: "auto",
           path: path(),
           current: state()?.content,
-          baseServerUrl: sdk.url,
-          authToken: sdk.authToken,
           onLoad: scrollSync.queueRestore,
           onError: (args: { kind: "image" | "audio" | "svg" }) => {
             if (args.kind !== "svg") return
