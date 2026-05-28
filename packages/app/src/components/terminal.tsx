@@ -356,7 +356,7 @@ export const Terminal = (props: TerminalProps) => {
         cursorStyle: "bar",
         cols: restoreSize?.cols,
         rows: restoreSize?.rows,
-        fontSize: 14,
+        fontSize: 10,
         fontFamily: terminalFontFamily(settings.appearance.terminalFont()),
         allowTransparency: false,
         convertEol: false,
@@ -688,7 +688,7 @@ export const Terminal = (props: TerminalProps) => {
         classList={{
           ...local.classList,
           "select-text": true,
-          "size-full px-6 py-3 font-mono relative overflow-hidden": true,
+          "size-full px-1 py-1 font-mono relative overflow-hidden": true,
           [local.class ?? ""]: !!local.class,
         }}
         {...others}
