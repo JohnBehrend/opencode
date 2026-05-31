@@ -5,10 +5,10 @@ const SWAP_SCRIPT = "/home/johnbehrend/.config/opencode/scripts/switch-backend.s
 type Target = "mimo2" | "qwen3_27b" | "qwen3_35b" | "step3"
 
 const MODEL_MAP: Record<string, Target> = {
-  "sglang/coder-model": "mimo2",
-  "vllm/qwen3.6-27b": "qwen3_27b",
-  "vllm/qwen3.6-35b": "qwen3_35b",
-  "vllm/step3p7": "step3",
+  "mimo2/coder-model": "mimo2",
+  "qwen3.6-27b/coder-model": "qwen3_27b",
+  "qwen3.6-35b/coder-model": "qwen3_35b",
+  "step3p7/coder-model": "step3",
 }
 
 let lastTarget: Target | null = null
