@@ -397,6 +397,13 @@ export function FileTabContent(props: { tab: string }) {
   })
 
   const isM4b = createMemo(() => path()?.endsWith(".m4b") ?? false)
+  const downloadUrl = createMemo(() => {
+    const p = path()
+    if (!p) return ""
+    const auth = sdk.authToken
+    if (!auth) return ""
+    return `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
+  })
 
   const renderFile = (source: string) => (
     <div class="relative overflow-hidden pb-40">
@@ -451,18 +458,13 @@ export function FileTabContent(props: { tab: string }) {
           <Match when={isM4b()}>
             <div class="flex flex-col items-center justify-center gap-4 p-6">
               <div class="text-14-semibold text-text-strong">{path()?.split("/").pop() ?? ""}</div>
-              <a
-                href={`${sdk.url}/file/download?path=${encodeURIComponent(path() ?? "")}${sdk.authToken ? `&auth_token=${sdk.authToken}` : ""}`}
-                download=""
-                class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download
-              </a>
+                <a
+                  href={downloadUrl()}
+                  download=""
+                  class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
+                >
+                  {downloadUrl()}
+                </a>
             </div>
           </Match>
           <Match when={state()?.loaded}>{renderFile(contents())}</Match>

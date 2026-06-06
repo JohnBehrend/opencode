@@ -41,20 +41,18 @@ export function MobileFileBrowser(props: {
 
     if (p.endsWith(".m4b")) {
       const name = p.split("/").pop() ?? p
+      const auth = sdk.authToken
+      if (!auth) return null
+      const href = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
       return (
         <div class="flex flex-col items-center justify-center gap-4 p-6">
           <div class="text-14-semibold text-text-strong">{name}</div>
           <a
-            href={`${sdk.url}/file/download?path=${encodeURIComponent(p)}${sdk.authToken ? `&auth_token=${sdk.authToken}` : ""}`}
+            href={href}
             download=""
             class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
+            {href}
           </a>
         </div>
       )

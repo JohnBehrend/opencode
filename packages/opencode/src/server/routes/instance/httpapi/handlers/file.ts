@@ -77,11 +77,12 @@ export const fileDownloadRoute = HttpRouter.use((router) =>
         const bytes = yield* appFs.readFile(full).pipe(Effect.orDie)
         const mimeType = AppFileSystem.mimeType(full)
         const filename = pathParam.split("/").pop() ?? pathParam
+        const encodedFilename = encodeURIComponent(filename).replace(/['()]/g, escape => `%${escape.charCodeAt(0).toString(16).toUpperCase()}`)
 
         return HttpServerResponse.uint8Array(bytes, {
           headers: {
             "Content-Type": mimeType,
-            "Content-Disposition": `attachment; filename="${filename}"`,
+            "Content-Disposition": `attachment; filename="${filename}"; filename*=UTF-8''${encodedFilename}`,
           },
         })
       }),
