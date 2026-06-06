@@ -41,15 +41,11 @@ export function MobileFileBrowser(props: {
 
     if (p.endsWith(".m4b")) {
       const name = p.split("/").pop() ?? p
+      const [downloadUrl, setDownloadUrl] = createSignal("")
       const handleDownload = () => {
         if (sdk.authToken) {
-          const href = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${sdk.authToken}`
-          const a = document.createElement("a")
-          a.href = href
-          a.download = ""
-          document.body.appendChild(a)
-          a.click()
-          document.body.removeChild(a)
+          const url = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${sdk.authToken}`
+          setDownloadUrl(url)
           return
         }
         const username = prompt("Enter username for download:")
@@ -57,23 +53,29 @@ export function MobileFileBrowser(props: {
         const password = prompt("Enter password for download:")
         if (!password) return
         const auth = btoa(`${username}:${password}`)
-        const href = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
-        const a = document.createElement("a")
-        a.href = href
-        a.download = ""
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
+        const url = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
+        setDownloadUrl(url)
       }
       return (
         <div class="flex flex-col items-center justify-center gap-4 p-6">
           <div class="text-14-semibold text-text-strong">{name}</div>
-          <button
-            onClick={handleDownload}
-            class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
-          >
-            Download
-          </button>
+          <Show when={!downloadUrl()}>
+            <button
+              onClick={handleDownload}
+              class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
+            >
+              Authenticate
+            </button>
+          </Show>
+          <Show when={downloadUrl()}>
+            <a
+              href={downloadUrl()}
+              download=""
+              class="break-all text-text-weak text-12-regular"
+            >
+              {downloadUrl()}
+            </a>
+          </Show>
         </div>
       )
     }

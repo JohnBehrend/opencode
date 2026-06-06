@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, Match, on, onCleanup, Switch } from "solid-js"
+import { createEffect, createMemo, createSignal, Match, on, onCleanup, Show, Switch } from "solid-js"
 import { createStore } from "solid-js/store"
 import { Dynamic } from "solid-js/web"
 import { makeEventListener } from "@solid-primitives/event-listener"
@@ -397,29 +397,22 @@ export function FileTabContent(props: { tab: string }) {
   })
 
   const isM4b = createMemo(() => path()?.endsWith(".m4b") ?? false)
-  const downloadUrl = createMemo(() => {
-    const p = path()
-    if (!p) return ""
-    const auth = sdk.authToken
-    if (!auth) return ""
-    return `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
-  })
+  const [downloadUrl, setDownloadUrl] = createSignal("")
   const handleDownload = () => {
     const p = path()
     if (!p) return
-    if (sdk.authToken) return
+    if (sdk.authToken) {
+      const url = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${sdk.authToken}`
+      setDownloadUrl(url)
+      return
+    }
     const username = prompt("Enter username for download:")
     if (!username) return
     const password = prompt("Enter password for download:")
     if (!password) return
     const auth = btoa(`${username}:${password}`)
     const url = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
-    const a = document.createElement("a")
-    a.href = url
-    a.download = ""
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
+    setDownloadUrl(url)
   }
 
   const renderFile = (source: string) => (
@@ -475,12 +468,23 @@ export function FileTabContent(props: { tab: string }) {
            <Match when={isM4b()}>
             <div class="flex flex-col items-center justify-center gap-4 p-6">
               <div class="text-14-semibold text-text-strong">{path()?.split("/").pop() ?? ""}</div>
-              <button
-                onClick={handleDownload}
-                class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
-              >
-                Download
-              </button>
+              <Show when={!downloadUrl()}>
+                <button
+                  onClick={handleDownload}
+                  class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
+                >
+                  Authenticate
+                </button>
+              </Show>
+              <Show when={downloadUrl()}>
+                <a
+                  href={downloadUrl()}
+                  download=""
+                  class="break-all text-text-weak text-12-regular"
+                >
+                  {downloadUrl()}
+                </a>
+              </Show>
             </div>
            </Match>
           <Match when={state()?.loaded}>{renderFile(contents())}</Match>
