@@ -448,7 +448,24 @@ export function FileTabContent(props: { tab: string }) {
     <Tabs.Content value={props.tab} class="mt-3 relative h-full">
       <ScrollView class="h-full" viewportRef={scrollSync.setViewport} onScroll={scrollSync.handleScroll as any}>
         <Switch>
-          <Match when={state()?.loaded || isM4b()}>{renderFile(contents())}</Match>
+          <Match when={isM4b()}>
+            <div class="flex flex-col items-center justify-center gap-4 p-6">
+              <div class="text-14-semibold text-text-strong">{path()?.split("/").pop() ?? ""}</div>
+              <a
+                href={`${sdk.url}/file/download?path=${encodeURIComponent(path() ?? "")}${sdk.authToken ? `&auth_token=${sdk.authToken}` : ""}`}
+                download=""
+                class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download
+              </a>
+            </div>
+          </Match>
+          <Match when={state()?.loaded}>{renderFile(contents())}</Match>
           <Match when={state()?.loading}>
             <div class="px-6 py-4 text-text-weak">{language.t("common.loading")}...</div>
           </Match>

@@ -1,8 +1,11 @@
+import * as path from "path"
 import * as InstanceState from "@/effect/instance-state"
+import { AppFileSystem } from "@opencode-ai/core/filesystem"
 import { File } from "@/file"
 import { Ripgrep } from "@/file/ripgrep"
 import { Effect } from "effect"
 import { HttpApiBuilder } from "effect/unstable/httpapi"
+import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect/unstable/http"
 import { InstanceHttpApi } from "../api"
 
 export const fileHandlers = HttpApiBuilder.group(InstanceHttpApi, "file", (handlers) =>
@@ -50,5 +53,38 @@ export const fileHandlers = HttpApiBuilder.group(InstanceHttpApi, "file", (handl
       .handle("list", list)
       .handle("content", content)
       .handle("status", status)
+  }),
+)
+
+export const fileDownloadRoute = HttpRouter.use((router) =>
+  Effect.gen(function* () {
+    const appFs = yield* AppFileSystem.Service
+
+    yield* router.add(
+      "GET",
+      "/file/download",
+      Effect.gen(function* () {
+        const ctx = yield* InstanceState.context
+        const request = yield* HttpServerRequest.HttpServerRequest
+        const url = new URL(request.url, "http://localhost")
+        const pathParam = url.searchParams.get("path")
+        if (!pathParam) return HttpServerResponse.text("Missing path parameter", { status: 400 })
+
+        const full = path.join(ctx.directory, pathParam)
+        const exists = yield* appFs.existsSafe(full).pipe(Effect.orDie)
+        if (!exists) return HttpServerResponse.text("File not found", { status: 404 })
+
+        const bytes = yield* appFs.readFile(full).pipe(Effect.orDie)
+        const mimeType = AppFileSystem.mimeType(full)
+        const filename = pathParam.split("/").pop() ?? pathParam
+
+        return HttpServerResponse.uint8Array(bytes, {
+          headers: {
+            "Content-Type": mimeType,
+            "Content-Disposition": `attachment; filename="${filename}"`,
+          },
+        })
+      }),
+    )
   }),
 )
