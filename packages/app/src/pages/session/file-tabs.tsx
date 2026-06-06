@@ -404,6 +404,23 @@ export function FileTabContent(props: { tab: string }) {
     if (!auth) return ""
     return `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
   })
+  const handleDownload = () => {
+    const p = path()
+    if (!p) return
+    if (sdk.authToken) return
+    const username = prompt("Enter username for download:")
+    if (!username) return
+    const password = prompt("Enter password for download:")
+    if (!password) return
+    const auth = btoa(`${username}:${password}`)
+    const url = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
+    const a = document.createElement("a")
+    a.href = url
+    a.download = ""
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
 
   const renderFile = (source: string) => (
     <div class="relative overflow-hidden pb-40">
@@ -455,18 +472,17 @@ export function FileTabContent(props: { tab: string }) {
     <Tabs.Content value={props.tab} class="mt-3 relative h-full">
       <ScrollView class="h-full" viewportRef={scrollSync.setViewport} onScroll={scrollSync.handleScroll as any}>
         <Switch>
-          <Match when={isM4b()}>
+           <Match when={isM4b()}>
             <div class="flex flex-col items-center justify-center gap-4 p-6">
               <div class="text-14-semibold text-text-strong">{path()?.split("/").pop() ?? ""}</div>
-                <a
-                  href={downloadUrl()}
-                  download=""
-                  class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
-                >
-                  {downloadUrl()}
-                </a>
+              <button
+                onClick={handleDownload}
+                class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-primary-foreground transition-colors text-14-medium hover:bg-primary-hover"
+              >
+                Download
+              </button>
             </div>
-          </Match>
+           </Match>
           <Match when={state()?.loaded}>{renderFile(contents())}</Match>
           <Match when={state()?.loading}>
             <div class="px-6 py-4 text-text-weak">{language.t("common.loading")}...</div>
