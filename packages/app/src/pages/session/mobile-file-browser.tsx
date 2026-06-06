@@ -48,9 +48,9 @@ export function MobileFileBrowser(props: {
           setDownloadUrl(url)
           return
         }
-        const username = prompt("Enter username for download:")
+        const username = window.prompt("Enter username for download:")
         if (!username) return
-        const password = prompt("Enter password for download:")
+        const password = window.prompt("Enter password for download:")
         if (!password) return
         const auth = btoa(`${username}:${password}`)
         const url = `${sdk.url}/file/download?path=${encodeURIComponent(p)}&directory=${encodeURIComponent(sdk.directory)}&auth_token=${auth}`
