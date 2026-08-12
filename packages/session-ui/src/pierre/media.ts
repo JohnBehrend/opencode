@@ -3,7 +3,7 @@ import type { FileContent } from "@opencode-ai/sdk/v2"
 export type MediaKind = "image" | "audio" | "svg"
 
 const imageExtensions = new Set(["png", "jpg", "jpeg", "gif", "webp", "avif", "bmp", "ico", "tif", "tiff", "heic"])
-const audioExtensions = new Set(["mp3", "wav", "ogg", "m4a", "aac", "flac", "opus"])
+const audioExtensions = new Set(["mp3", "wav", "ogg", "m4a", "m4b", "aac", "flac", "opus"])
 
 type MediaValue = unknown
 
@@ -23,6 +23,7 @@ export function normalizeMimeType(type: string | undefined) {
   if (!mime) return
   if (mime === "audio/x-aac") return "audio/aac"
   if (mime === "audio/x-m4a") return "audio/mp4"
+  if (mime === "audio/x-m4b") return "audio/mp4"
   return mime
 }
 
@@ -49,6 +50,7 @@ function validDataUrl(value: string, kind: MediaKind) {
   if (kind === "image") return value.startsWith("data:image/") ? value : undefined
   if (value.startsWith("data:audio/x-aac;")) return value.replace("data:audio/x-aac;", "data:audio/aac;")
   if (value.startsWith("data:audio/x-m4a;")) return value.replace("data:audio/x-m4a;", "data:audio/mp4;")
+  if (value.startsWith("data:audio/x-m4b;")) return value.replace("data:audio/x-m4b;", "data:audio/mp4;")
   if (value.startsWith("data:audio/")) return value
 }
 
