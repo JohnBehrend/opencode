@@ -313,6 +313,7 @@ export const dict = {
   "common.loading": "Načítání",
   "common.loading.ellipsis": "...",
   "common.cancel": "Zrušit",
+  "common.back": "Back",
   "common.clear": "Jasný",
   "common.open": "Otevřít",
   "common.connect": "Připojte se",
@@ -826,6 +827,9 @@ export const dict = {
   "terminal.title": "Terminál",
   "terminal.title.numbered": "Terminál {{number}}",
   "terminal.close": "Zavřete terminál",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Připojení ztraceno",
   "terminal.connectionLost.abnormalClose": "WebSocket abnormálně uzavřeno: {{code}}",
   "terminal.connectionLost.description":

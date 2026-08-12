@@ -312,6 +312,7 @@ export const dict = {
   "common.loading": "Se încarcă",
   "common.loading.ellipsis": "...",
   "common.cancel": "Anulează",
+  "common.back": "Back",
   "common.clear": "Curăță",
   "common.open": "Deschide",
   "common.connect": "Conectează",
@@ -826,6 +827,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Închide terminalul",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Conexiune pierdută",
   "terminal.connectionLost.abnormalClose": "WebSocket s-a închis anormal: {{code}}",
   "terminal.connectionLost.description":

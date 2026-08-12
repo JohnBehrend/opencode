@@ -314,6 +314,7 @@ export const dict = {
   "common.loading": "Φόρτωση",
   "common.loading.ellipsis": "...",
   "common.cancel": "Ακύρωση",
+  "common.back": "Back",
   "common.clear": "Διαγραφή",
   "common.open": "Άνοιγμα",
   "common.connect": "Σύνδεση",
@@ -830,6 +831,9 @@ export const dict = {
   "terminal.title": "Τερματικό",
   "terminal.title.numbered": "Τερματικό {{number}}",
   "terminal.close": "Κλείσιμο τερματικού",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Η σύνδεση χάθηκε",
   "terminal.connectionLost.abnormalClose": "WebSocket έκλεισε ασυνήθιστα: {{code}}",
   "terminal.connectionLost.description":

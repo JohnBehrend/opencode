@@ -342,6 +342,7 @@ export const dict = {
   "common.loading": "Yükleniyor",
   "common.loading.ellipsis": "...",
   "common.cancel": "İptal",
+  "common.back": "Back",
   "common.clear": "Temizle",
   "common.connect": "Bağlan",
   "common.disconnect": "Bağlantıyı kes",
@@ -859,6 +860,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Terminali kapat",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Bağlantı kesildi",
   "terminal.connectionLost.description":
     "Terminal bağlantısı kesildi. Bu durum sunucu yeniden başladığında oluşabilir.",

@@ -235,6 +235,7 @@ export const dict = {
   "common.loading": "Indlæser",
   "common.loading.ellipsis": "...",
   "common.cancel": "Annuller",
+  "common.back": "Back",
   "common.clear": "Ryd",
   "common.connect": "Forbind",
   "common.disconnect": "Frakobl",
@@ -731,6 +732,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Luk terminal",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
 
   "terminal.connectionLost.title": "Forbindelse mistet",
   "terminal.connectionLost.description": "Terminalforbindelsen blev afbrudt. Dette kan ske, når serveren genstarter.",

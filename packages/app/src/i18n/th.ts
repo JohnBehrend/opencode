@@ -335,6 +335,7 @@ export const dict = {
   "common.loading": "กำลังโหลด",
   "common.loading.ellipsis": "...",
   "common.cancel": "ยกเลิก",
+  "common.back": "Back",
   "common.clear": "ล้าง",
   "common.connect": "เชื่อมต่อ",
   "common.disconnect": "ยกเลิกการเชื่อมต่อ",
@@ -842,6 +843,9 @@ export const dict = {
   "terminal.title": "เทอร์มินัล",
   "terminal.title.numbered": "เทอร์มินัล {{number}}",
   "terminal.close": "ปิดเทอร์มินัล",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "การเชื่อมต่อขาดหาย",
   "terminal.connectionLost.description": "การเชื่อมต่อเทอร์มินัลถูกขัดจังหวะ อาจเกิดขึ้นเมื่อเซิร์ฟเวอร์รีสตาร์ท",
   "terminal.connectTicket.csrfError":

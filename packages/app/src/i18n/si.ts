@@ -312,6 +312,7 @@ export const dict: Record<string, string> = {
   "common.loading": "පැටවීම",
   "common.loading.ellipsis": "...",
   "common.cancel": "අවලංගු කරන්න",
+  "common.back": "Back",
   "common.clear": "පැහැදිලියි",
   "common.open": "විවෘත කරන්න",
   "common.connect": "සම්බන්ධ කරන්න",
@@ -818,6 +819,9 @@ export const dict: Record<string, string> = {
   "terminal.title": "පර්යන්තය",
   "terminal.title.numbered": "පර්යන්තය {{number}}",
   "terminal.close": "පර්යන්තය වසන්න",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "සම්බන්ධතාවය නැති විය",
   "terminal.connectionLost.abnormalClose": "WebSocket අසාමාන්‍ය ලෙස වසා ඇත: {{code}}",
   "terminal.connectionLost.description":

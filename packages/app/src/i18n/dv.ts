@@ -318,6 +318,7 @@ export const dict = {
   "common.loading": "ލޯޑިންގ",
   "common.loading.ellipsis": "...",
   "common.cancel": "ކެންސަލް",
+  "common.back": "Back",
   "common.clear": "ސާފުކޮށް",
   "common.open": "ހުޅުވުން",
   "common.connect": "ގުޅުވުން",
@@ -834,6 +835,9 @@ export const dict = {
   "terminal.title": "ޓާމިނަލް އެވެ",
   "terminal.title.numbered": "ޓާމިނަލް {{number}} އެވެ",
   "terminal.close": "ޓާމިނަލް ބަންދުކުރުން",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "ގުޅުން ގެއްލިއްޖެއެވެ",
   "terminal.connectionLost.abnormalClose": "WebSocket އާދަޔާ ހިލާފަށް ބަންދުވެފައި: {{code}}",
   "terminal.connectionLost.description":

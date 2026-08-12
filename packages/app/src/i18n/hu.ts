@@ -317,6 +317,7 @@ export const dict = {
   "common.loading": "Betöltés",
   "common.loading.ellipsis": "...",
   "common.cancel": "Mégsem",
+  "common.back": "Back",
   "common.clear": "Törlés",
   "common.open": "Nyitott",
   "common.connect": "Csatlakozás",
@@ -828,6 +829,9 @@ export const dict = {
   "terminal.title": "Terminál",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Zárja be a terminált",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Kapcsolat megszakadt",
   "terminal.connectionLost.abnormalClose": "WebSocket rendellenesen zárva: {{code}}",
   "terminal.connectionLost.description":

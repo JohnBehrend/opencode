@@ -314,6 +314,7 @@ export const dict = {
   "common.loading": "Бор карда мешавад",
   "common.loading.ellipsis": "...",
   "common.cancel": "Бекор кардан",
+  "common.back": "Back",
   "common.clear": "Тоза",
   "common.open": "Кушода",
   "common.connect": "Пайваст кунед",
@@ -824,6 +825,9 @@ export const dict = {
   "terminal.title": "Терминал",
   "terminal.title.numbered": "Терминал {{number}}",
   "terminal.close": "Терминалро пӯшед",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Пайвастшавӣ гум шуд",
   "terminal.connectionLost.abnormalClose": "WebSocket ғайримуқаррарӣ баста шуд: {{code}}",
   "terminal.connectionLost.description":

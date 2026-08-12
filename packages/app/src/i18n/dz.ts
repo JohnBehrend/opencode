@@ -317,6 +317,7 @@ export const dict: Record<string, string> = {
   "common.loading": "མངོན་གསལ་འབད་དོ།",
   "common.loading.ellipsis": "...",
   "common.cancel": "ཆ་མེད་བཏང་པ་",
+  "common.back": "Back",
   "common.clear": "གསལ་ཏོག་ཏོ",
   "common.open": "ཕྱེ་ཕྱེཝ",
   "common.connect": "འབྲེལ༌མཐུད",
@@ -835,6 +836,9 @@ export const dict: Record<string, string> = {
   "terminal.title": "ཊར་མི་ནཱལ།",
   "terminal.title.numbered": "ཊར་མི་ནཱལ་ {{number}}།",
   "terminal.close": "ཊར་མི་ནཱལ་ཁ་བསྡམས།",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "མཐུད་ལམ་བརླག་སྟོར་ཞུགས་ཡོདཔ།",
   "terminal.connectionLost.abnormalClose": "WebSocket སྤྱིར་བཏང་མེན་པར་ཁ་བསྡམས: {{code}}",
   "terminal.connectionLost.description":

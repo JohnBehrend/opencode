@@ -315,6 +315,7 @@ export const dict = {
   "common.loading": "Բեռնվում",
   "common.loading.ellipsis": "...",
   "common.cancel": "Չեղարկել",
+  "common.back": "Back",
   "common.clear": "Մաքրել",
   "common.open": "Բացել",
   "common.connect": "Միացեք",
@@ -827,6 +828,9 @@ export const dict = {
   "terminal.title": "Տերմինալ",
   "terminal.title.numbered": "Տերմինալ {{number}}",
   "terminal.close": "Փակել տերմինալը",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Կապը կորցրած",
   "terminal.connectionLost.abnormalClose": "WebSocket փակվել է աննորմալ՝ {{code}}",
   "terminal.connectionLost.description":

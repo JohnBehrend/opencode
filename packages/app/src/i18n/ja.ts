@@ -318,6 +318,7 @@ export const dict = {
   "common.loading": "読み込み中",
   "common.loading.ellipsis": "...",
   "common.cancel": "キャンセル",
+  "common.back": "Back",
   "common.clear": "クリア",
   "common.connect": "接続",
   "common.disconnect": "切断",
@@ -786,6 +787,9 @@ export const dict = {
   "terminal.title": "ターミナル",
   "terminal.title.numbered": "ターミナル {{number}}",
   "terminal.close": "ターミナルを閉じる",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "接続が失われました",
   "terminal.connectionLost.description":
     "ターミナルの接続が中断されました。これはサーバーが再起動したときに発生することがあります。",

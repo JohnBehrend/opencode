@@ -71,6 +71,7 @@ import {
   SessionComposerRegion,
 } from "@/pages/session/composer"
 import { createOpenReviewFile, createSessionTabs, createSizing, shouldShowFileTree } from "@/pages/session/helpers"
+import { MobileFileBrowser } from "@/pages/session/mobile-file-browser"
 import { MessageTimeline } from "@/pages/session/timeline/message-timeline"
 import { createTimelineModel } from "@/pages/session/timeline/model"
 import { type DiffStyle, SessionReviewTab, type SessionReviewTabProps } from "@/pages/session/review-tab"
@@ -113,7 +114,7 @@ type VcsMode = "git" | "branch"
 
 const sessionViewState = () => ({
   messageId: undefined as string | undefined,
-  mobileTab: "session" as "session" | "changes" | "terminal",
+  mobileTab: "session" as "session" | "changes" | "terminal" | "files",
 })
 
 function isCurrentSessionNotFoundError(error: unknown, sessionID: string | undefined) {
@@ -667,6 +668,7 @@ export default function Page() {
   })
   const mobileChanges = createMemo(() => !isDesktop() && store.mobileTab === "changes")
   const mobileTerminal = createMemo(() => !isDesktop() && store.mobileTab === "terminal")
+  const mobileFiles = createMemo(() => !isDesktop() && store.mobileTab === "files")
   const wantsReview = createMemo(() =>
     isDesktop()
       ? desktopFileTreeOpen() ||
@@ -2028,7 +2030,7 @@ export default function Page() {
         <Tabs.Trigger
           value="session"
           classList={{
-            "!w-1/3 !max-w-none": true,
+            "!w-1/4 !max-w-none": true,
             "!border-b-0 !border-t !border-border-weak-base [&:has([data-selected])]:!border-t-transparent": bottom,
           }}
           classes={{ button: compact ? "w-full !py-2" : "w-full" }}
@@ -2039,7 +2041,7 @@ export default function Page() {
         <Tabs.Trigger
           value="changes"
           classList={{
-            "!w-1/3 !max-w-none !border-r-0": true,
+            "!w-1/4 !max-w-none": true,
             "!border-b-0 !border-t !border-border-weak-base [&:has([data-selected])]:!border-t-transparent": bottom,
           }}
           classes={{ button: compact ? "w-full !py-2" : "w-full" }}
@@ -2050,9 +2052,20 @@ export default function Page() {
             : language.t("session.review.change.other")}
         </Tabs.Trigger>
         <Tabs.Trigger
+          value="files"
+          classList={{
+            "!w-1/4 !max-w-none": true,
+            "!border-b-0 !border-t !border-border-weak-base [&:has([data-selected])]:!border-t-transparent": bottom,
+          }}
+          classes={{ button: compact ? "w-full !py-2" : "w-full" }}
+          onClick={() => setStore("mobileTab", "files")}
+        >
+          {language.t("session.files.all")}
+        </Tabs.Trigger>
+        <Tabs.Trigger
           value="terminal"
           classList={{
-            "!w-1/3 !max-w-none !border-r-0": true,
+            "!w-1/4 !max-w-none !border-r-0": true,
             "!border-b-0 !border-t !border-border-weak-base [&:has([data-selected])]:!border-t-transparent": bottom,
           }}
           classes={{ button: compact ? "w-full !py-2" : "w-full" }}
@@ -2092,6 +2105,11 @@ export default function Page() {
                 loadingClass: "px-4 py-4 text-text-weak",
                 emptyClass: "h-full pb-64 -mt-4 flex flex-col items-center justify-center text-center gap-6",
               })}
+            </div>
+          </Match>
+          <Match when={params.id && mobileFiles()}>
+            <div class="relative h-full overflow-hidden">
+              <MobileFileBrowser activeTab={activeFileTab} />
             </div>
           </Match>
           <Match when={params.id && mobileTerminal()}>
@@ -2147,7 +2165,7 @@ export default function Page() {
         </Switch>
       </div>
 
-      <Show when={(params.id || !newSessionDesign()) && !mobileChanges() && !mobileTerminal()}>
+      <Show when={(params.id || !newSessionDesign()) && !mobileChanges() && !mobileTerminal() && !mobileFiles()}>
         {(_) => {
           const controller = createSessionComposerRegionController({
             state: composer,
@@ -2402,7 +2420,7 @@ export default function Page() {
         </Show>
       </div>
 
-      <Show when={!newSessionDesign() && !mobileTerminal()}>
+      <Show when={!newSessionDesign() && !mobileTerminal() && !mobileFiles()}>
         <TerminalPanel />
       </Show>
     </SessionRouteFrame>

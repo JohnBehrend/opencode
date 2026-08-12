@@ -320,6 +320,7 @@ export const dict = {
   "common.loading": "Đang tải",
   "common.loading.ellipsis": "...",
   "common.cancel": "Hủy",
+  "common.back": "Back",
   "common.clear": "Xóa",
   "common.open": "Mở",
   "common.connect": "Kết nối",
@@ -832,6 +833,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Đóng terminal",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Mất kết nối",
   "terminal.connectionLost.abnormalClose": "WebSocket đóng bất thường: {{code}}",
   "terminal.connectionLost.description":

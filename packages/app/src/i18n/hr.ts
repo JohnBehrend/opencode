@@ -317,6 +317,7 @@ export const dict = {
   "common.loading": "Učitavanje",
   "common.loading.ellipsis": "...",
   "common.cancel": "Otkazati",
+  "common.back": "Back",
   "common.clear": "Jasan",
   "common.open": "Otvoriti",
   "common.connect": "Poveži se",
@@ -830,6 +831,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Zatvori terminal",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Veza izgubljena",
   "terminal.connectionLost.abnormalClose": "WebSocket nenormalno zatvoren: {{code}}",
   "terminal.connectionLost.description":

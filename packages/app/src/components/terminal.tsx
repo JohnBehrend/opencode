@@ -5,7 +5,8 @@ import { resolveThemeVariantV2 } from "@opencode-ai/ui/theme/v2/resolve"
 import type { HexColor, ResolvedV2Theme } from "@opencode-ai/ui/theme/types"
 import { showToast } from "@/utils/toast"
 import type { FitAddon, Ghostty, Terminal as Term } from "ghostty-web"
-import { type ComponentProps, createEffect, createMemo, onCleanup, onMount, splitProps } from "solid-js"
+import { type ComponentProps, createEffect, createMemo, onCleanup, onMount, Show, splitProps } from "solid-js"
+import { createMediaQuery } from "@solid-primitives/media"
 import { SerializeAddon } from "@/addons/serialize"
 import { matchKeybind, parseKeybind } from "@/context/command"
 import { useLanguage } from "@/context/language"
@@ -70,7 +71,7 @@ const debugTerminal = (...values: unknown[]) => {
   console.debug("[terminal]", ...values)
 }
 
-const disableAutocorrect = (el: HTMLElement) => {
+const applyTerminalInputAttributes = (el: HTMLElement) => {
   el.setAttribute("autocorrect", "off")
   el.setAttribute("autocomplete", "off")
   el.setAttribute("spellcheck", "false")
@@ -79,6 +80,22 @@ const disableAutocorrect = (el: HTMLElement) => {
   el.setAttribute("data-gramm", "false")
   el.setAttribute("data-enable-grammarly", "false")
   el.setAttribute("data-no-gramme", "true")
+}
+
+const prepareTerminalInput = (el: HTMLElement) => {
+  applyTerminalInputAttributes(el)
+
+  // Mobile keyboards commit autocorrected replacements via a separate
+  // `insertReplacementText` beforeinput that re-sends already-typed text,
+  // doubling it ("ls ls ls" -> "ls lsls lslsls"). Drop that commit; the raw
+  // keystrokes were already forwarded to the shell.
+  const onBeforeInput = (event: InputEvent) => {
+    if (event.inputType !== "insertReplacementText") return
+    event.preventDefault()
+    event.stopImmediatePropagation()
+  }
+  el.addEventListener("beforeinput", onBeforeInput, true)
+  return () => el.removeEventListener("beforeinput", onBeforeInput, true)
 }
 
 const resolveV2Token = (tokens: ResolvedV2Theme, key: string) => {
@@ -186,6 +203,7 @@ export const Terminal = (props: TerminalProps) => {
   const settings = useSettings()
   const theme = useTheme()
   const language = useLanguage()
+  const isDesktop = createMediaQuery("(min-width: 768px)")
   // Terminal captures its connection for the PTY lifetime, so callers must key it per server/session.
   const connection = useServerSDK()().server
   const directory = sdk().directory
@@ -369,8 +387,6 @@ export const Terminal = (props: TerminalProps) => {
     const t = term
     if (!t) return
     t.focus()
-    t.textarea?.focus()
-    setTimeout(() => t.textarea?.focus(), 0)
   }
   const handlePointerDown = () => {
     const activeElement = document.activeElement
@@ -460,9 +476,9 @@ export const Terminal = (props: TerminalProps) => {
 
       const active = document.activeElement
       t.open(container)
-      if (t.textarea) disableAutocorrect(t.textarea)
+      cleanups.push(prepareTerminalInput(container))
       requestAnimationFrame(() => {
-        if (t.textarea) disableAutocorrect(t.textarea)
+        applyTerminalInputAttributes(container)
       })
       useTerminalUiBindings({
         container,
@@ -481,7 +497,6 @@ export const Terminal = (props: TerminalProps) => {
           const current = document.activeElement
           if (current !== container && !container.contains(current)) return
           t.blur()
-          t.textarea?.blur()
           if (active instanceof HTMLElement && active.isConnected) active.focus()
         }
         restoreFocus()
@@ -752,21 +767,71 @@ export const Terminal = (props: TerminalProps) => {
     output.flush(finalize)
   })
 
+  const sendInput = (data: string) => {
+    if (ws?.readyState === WebSocket.OPEN) ws.send(data)
+  }
+
   return (
-    <div
-      ref={container}
-      data-component="terminal"
-      dir="ltr"
-      data-prevent-autofocus
-      tabIndex={-1}
-      style={{ "background-color": terminalColors().background }}
-      classList={{
-        ...local.classList,
-        "select-text": true,
-        "size-full px-6 py-3 font-mono relative overflow-hidden": true,
-        [local.class ?? ""]: !!local.class,
-      }}
-      {...others}
-    />
+    <div class="relative size-full overflow-hidden" style={{ "touch-action": "none" }}>
+      <div
+        ref={container}
+        data-component="terminal"
+        dir="ltr"
+        data-prevent-autofocus
+        tabIndex={-1}
+        style={{ "background-color": terminalColors().background }}
+        classList={{
+          ...local.classList,
+          "select-text": true,
+          "size-full px-6 py-3 font-mono relative overflow-hidden": true,
+          [local.class ?? ""]: !!local.class,
+        }}
+        {...others}
+      />
+      <Show when={!isDesktop()}>
+        <div class="absolute bottom-0 inset-x-0 z-10 flex items-center justify-center gap-2 p-2 bg-background-stronger/80 backdrop-blur-sm border-t border-border-weaker-base">
+          <button
+            type="button"
+            onClick={() => sendInput("\x1b[A")}
+            aria-label={language.t("terminal.toolbar.arrowUp")}
+            class="rounded-md bg-surface-base px-2.5 py-1.5 text-12-medium text-text-strong active:bg-surface-hover"
+          >
+            ↑
+          </button>
+          <button
+            type="button"
+            onClick={() => sendInput("\x1b[B")}
+            aria-label={language.t("terminal.toolbar.arrowDown")}
+            class="rounded-md bg-surface-base px-2.5 py-1.5 text-12-medium text-text-strong active:bg-surface-hover"
+          >
+            ↓
+          </button>
+          <button
+            type="button"
+            onClick={() => sendInput("\x03")}
+            aria-label={language.t("terminal.toolbar.interrupt")}
+            class="rounded-md bg-surface-base px-2.5 py-1.5 text-12-medium text-text-strong active:bg-surface-hover"
+          >
+            {language.t("terminal.toolbar.interrupt")}
+          </button>
+          <button
+            type="button"
+            onClick={() => sendInput("\x1b[5~")}
+            aria-label={language.t("common.key.pageUp")}
+            class="rounded-md bg-surface-base px-2.5 py-1.5 text-12-medium text-text-strong active:bg-surface-hover"
+          >
+            {language.t("common.key.pageUp")}
+          </button>
+          <button
+            type="button"
+            onClick={() => sendInput("\x1b[6~")}
+            aria-label={language.t("common.key.pageDown")}
+            class="rounded-md bg-surface-base px-2.5 py-1.5 text-12-medium text-text-strong active:bg-surface-hover"
+          >
+            {language.t("common.key.pageDown")}
+          </button>
+        </div>
+      </Show>
+    </div>
   )
 }

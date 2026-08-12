@@ -335,6 +335,7 @@ export const dict = {
   "common.loading": "載入中",
   "common.loading.ellipsis": "...",
   "common.cancel": "取消",
+  "common.back": "Back",
   "common.clear": "清除",
   "common.connect": "連線",
   "common.disconnect": "中斷連線",
@@ -836,6 +837,9 @@ export const dict = {
   "terminal.title": "終端機",
   "terminal.title.numbered": "終端機 {{number}}",
   "terminal.close": "關閉終端機",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
 
   "terminal.connectionLost.title": "連線中斷",
   "terminal.connectionLost.description": "終端機連線已中斷。這可能會在伺服器重新啟動時發生。",

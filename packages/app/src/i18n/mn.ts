@@ -316,6 +316,7 @@ export const dict = {
   "common.loading": "Ачааж байна",
   "common.loading.ellipsis": "...",
   "common.cancel": "Цуцлах",
+  "common.back": "Back",
   "common.clear": "Тодорхой",
   "common.open": "Нээлттэй",
   "common.connect": "Холбох",
@@ -828,6 +829,9 @@ export const dict = {
   "terminal.title": "Терминал",
   "terminal.title.numbered": "Терминал {{number}}",
   "terminal.close": "Терминалыг хаах",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Холболт тасарсан",
   "terminal.connectionLost.abnormalClose": "WebSocket хэвийн бус хаагдсан: {{code}}",
   "terminal.connectionLost.description":

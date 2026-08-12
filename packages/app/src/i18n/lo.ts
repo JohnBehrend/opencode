@@ -312,6 +312,7 @@ export const dict = {
   "common.loading": "ກຳລັງໂຫຼດ",
   "common.loading.ellipsis": "...",
   "common.cancel": "ຍົກເລີກ",
+  "common.back": "Back",
   "common.clear": "ຈະແຈ້ງ",
   "common.open": "ເປີດ",
   "common.connect": "ເຊື່ອມຕໍ່",
@@ -816,6 +817,9 @@ export const dict = {
   "terminal.title": "ສະຖານີ",
   "terminal.title.numbered": "ສະຖານີ {{number}}",
   "terminal.close": "ປິດ terminal",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "ສູນເສຍການເຊື່ອມຕໍ່",
   "terminal.connectionLost.abnormalClose": "WebSocket ປິດຢ່າງຜິດປົກກະຕິ: {{code}}",
   "terminal.connectionLost.description":

@@ -313,6 +313,7 @@ export const dict = {
   "common.loading": "در حال بارگذاری",
   "common.loading.ellipsis": "...",
   "common.cancel": "لغو کنید",
+  "common.back": "Back",
   "common.clear": "پاک کردن",
   "common.open": "باز کنید",
   "common.connect": "اتصال",
@@ -821,6 +822,9 @@ export const dict = {
   "terminal.title": "ترمینال",
   "terminal.title.numbered": "ترمینال {{number}}",
   "terminal.close": "ترمینال را ببندید",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "اتصال قطع شد",
   "terminal.connectionLost.abnormalClose": "WebSocket به طور غیر عادی بسته شد: {{code}}",
   "terminal.connectionLost.description":

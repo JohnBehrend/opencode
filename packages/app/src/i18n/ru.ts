@@ -336,6 +336,7 @@ export const dict = {
   "common.loading": "Загрузка",
   "common.loading.ellipsis": "...",
   "common.cancel": "Отмена",
+  "common.back": "Back",
   "common.clear": "Очистить",
   "common.connect": "Подключить",
   "common.disconnect": "Отключить",
@@ -856,6 +857,9 @@ export const dict = {
   "terminal.title": "Терминал",
   "terminal.title.numbered": "Терминал {{number}}",
   "terminal.close": "Закрыть терминал",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Соединение потеряно",
   "terminal.connectionLost.description":
     "Соединение с терминалом прервано. Это может произойти при перезапуске сервера.",

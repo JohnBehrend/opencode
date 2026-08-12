@@ -220,6 +220,7 @@ export const dict = {
   "common.loading": "Ladataan",
   "common.loading.ellipsis": "...",
   "common.cancel": "Peruuta",
+  "common.back": "Back",
   "common.clear": "Tyhjennä",
   "common.open": "Avaa",
   "common.connect": "Yhdistä",
@@ -720,6 +721,9 @@ export const dict = {
   "terminal.title": "Terminaali",
   "terminal.title.numbered": "Terminaali {{number}}",
   "terminal.close": "Sulje terminaali",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Yhteys katkesi",
   "terminal.connectionLost.abnormalClose": "WebSocket sulkeutui poikkeavasti: {{code}}",
   "terminal.connectionLost.description":

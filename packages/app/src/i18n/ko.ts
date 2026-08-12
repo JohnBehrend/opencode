@@ -210,6 +210,7 @@ export const dict = {
   "common.loading": "로딩 중",
   "common.loading.ellipsis": "...",
   "common.cancel": "취소",
+  "common.back": "Back",
   "common.connect": "연결",
   "common.disconnect": "연결 해제",
   "common.continue": "계속",
@@ -549,6 +550,9 @@ export const dict = {
   "terminal.title": "터미널",
   "terminal.title.numbered": "터미널 {{number}}",
   "terminal.close": "터미널 닫기",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "연결 끊김",
   "terminal.connectionLost.description":
     "터미널 연결이 중단되었습니다. 서버가 재시작하면 이런 일이 발생할 수 있습니다.",

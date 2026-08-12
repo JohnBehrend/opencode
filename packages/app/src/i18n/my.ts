@@ -316,6 +316,7 @@ export const dict = {
   "common.loading": "တင်နေသည်။",
   "common.loading.ellipsis": "...",
   "common.cancel": "မလုပ်တော့",
+  "common.back": "Back",
   "common.clear": "ရှင်းလင်းသည်။",
   "common.open": "ဖွင့်ပါ။",
   "common.connect": "ချိတ်ဆက်ပါ။",
@@ -830,6 +831,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Terminal ကို ပိတ်ပါ",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "ချိတ်ဆက်မှု ပြတ်တောက်သွားသည်။",
   "terminal.connectionLost.abnormalClose": "WebSocket ကို ပုံမှန်မဟုတ်စွာ ပိတ်ထားသည်- {{code}}",
   "terminal.connectionLost.description":

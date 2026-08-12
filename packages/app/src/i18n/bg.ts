@@ -316,6 +316,7 @@ export const dict = {
   "common.loading": "Зарежда се",
   "common.loading.ellipsis": "...",
   "common.cancel": "Отказ",
+  "common.back": "Back",
   "common.clear": "ясно",
   "common.open": "Отворете",
   "common.connect": "Свържете се",
@@ -827,6 +828,9 @@ export const dict = {
   "terminal.title": "Терминал",
   "terminal.title.numbered": "Терминал {{number}}",
   "terminal.close": "Затворете терминала",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Загубена връзка",
   "terminal.connectionLost.abnormalClose": "WebSocket затворено необичайно: {{code}}",
   "terminal.connectionLost.description":

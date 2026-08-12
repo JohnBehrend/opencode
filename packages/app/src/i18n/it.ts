@@ -222,6 +222,7 @@ export const dict = {
   "common.loading": "Caricamento",
   "common.loading.ellipsis": "...",
   "common.cancel": "Annulla",
+  "common.back": "Back",
   "common.clear": "Cancella",
   "common.open": "Apri",
   "common.connect": "Connetti",
@@ -741,6 +742,9 @@ export const dict = {
   "terminal.title": "Terminale",
   "terminal.title.numbered": "Terminale {{number}}",
   "terminal.close": "Chiudi il terminale",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Connessione persa",
   "terminal.connectionLost.abnormalClose": "WebSocket chiuso in modo anomalo: {{code}}",
   "terminal.connectionLost.description":

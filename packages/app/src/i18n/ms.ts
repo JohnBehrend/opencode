@@ -313,6 +313,7 @@ export const dict = {
   "common.loading": "Memuatkan",
   "common.loading.ellipsis": "...",
   "common.cancel": "Batal",
+  "common.back": "Back",
   "common.clear": "Kosongkan",
   "common.open": "Buka",
   "common.connect": "Sambung",
@@ -820,6 +821,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Tutup terminal",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Sambungan Terputus",
   "terminal.connectionLost.abnormalClose": "WebSocket ditutup secara tidak normal: {{code}}",
   "terminal.connectionLost.description":

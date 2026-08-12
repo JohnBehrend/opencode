@@ -321,6 +321,7 @@ export const dict = {
   "common.loading": "Carregando",
   "common.loading.ellipsis": "...",
   "common.cancel": "Cancelar",
+  "common.back": "Back",
   "common.clear": "Limpar",
   "common.connect": "Conectar",
   "common.disconnect": "Desconectar",
@@ -794,6 +795,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Fechar terminal",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Conexão perdida",
   "terminal.connectionLost.description":
     "A conexão do terminal foi interrompida. Isso pode acontecer quando o servidor reinicia.",

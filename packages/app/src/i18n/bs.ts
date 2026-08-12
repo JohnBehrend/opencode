@@ -338,6 +338,7 @@ export const dict = {
   "common.loading": "Učitavanje",
   "common.loading.ellipsis": "...",
   "common.cancel": "Otkaži",
+  "common.back": "Back",
   "common.clear": "Očisti",
   "common.connect": "Poveži",
   "common.disconnect": "Prekini vezu",
@@ -854,6 +855,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "Zatvori terminal",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Veza prekinuta",
   "terminal.connectionLost.description":
     "Veza s terminalom je prekinuta. Ovo se može desiti kada se server ponovo pokrene.",

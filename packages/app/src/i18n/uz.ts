@@ -315,6 +315,7 @@ export const dict = {
   "common.loading": "Yuklanmoqda",
   "common.loading.ellipsis": "...",
   "common.cancel": "Bekor qilish",
+  "common.back": "Back",
   "common.clear": "Toza",
   "common.open": "Ochiq",
   "common.connect": "Ulanish",
@@ -827,6 +828,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "{{number}} terminali",
   "terminal.close": "Terminalni yoping",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Ulanish uzildi",
   "terminal.connectionLost.abnormalClose": "WebSocket anormal tarzda yopildi: {{code}}",
   "terminal.connectionLost.description":

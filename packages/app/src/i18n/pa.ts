@@ -319,6 +319,7 @@ export const dict = {
   "common.loading": "لوڈ ہو رہیا اے",
   "common.loading.ellipsis": "...",
   "common.cancel": "منسوخ کرو",
+  "common.back": "Back",
   "common.clear": "صاف",
   "common.open": "کھولو",
   "common.connect": "منسلک کرو",
@@ -830,6 +831,9 @@ export const dict = {
   "terminal.title": "Terminal",
   "terminal.title.numbered": "Terminal {{number}}",
   "terminal.close": "ٹرمینل بند کرو",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "کنکشن گواچ گیا",
   "terminal.connectionLost.abnormalClose": "WebSocket غیر معمولی طور تے بند کیتا گیا: {{code}}",
   "terminal.connectionLost.description":

@@ -313,6 +313,7 @@ export const dict = {
   "common.loading": "Ielādējas",
   "common.loading.ellipsis": "...",
   "common.cancel": "Atcelt",
+  "common.back": "Back",
   "common.clear": "Notīrīt",
   "common.open": "Atvērt",
   "common.connect": "Pievienoties",
@@ -826,6 +827,9 @@ export const dict = {
   "terminal.title": "Terminālis",
   "terminal.title.numbered": "Terminālis {{number}}",
   "terminal.close": "Aizvērt termināli",
+  "terminal.toolbar.interrupt": "Ctrl+C",
+  "terminal.toolbar.arrowUp": "Up arrow",
+  "terminal.toolbar.arrowDown": "Down arrow",
   "terminal.connectionLost.title": "Savienojums zudis",
   "terminal.connectionLost.abnormalClose": "WebSocket savienojums neparasti pārtraukts: {{code}}",
   "terminal.connectionLost.description":
