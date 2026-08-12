@@ -2,7 +2,7 @@ import { FileSystem } from "@opencode-ai/core/filesystem"
 import { NonNegativeInt } from "@opencode-ai/core/schema"
 import { LSP } from "@/lsp/lsp"
 import { Schema } from "effect"
-import { HttpApi, HttpApiEndpoint, HttpApiGroup, OpenApi } from "effect/unstable/httpapi"
+import { HttpApi, HttpApiEndpoint, HttpApiGroup, HttpApiSchema, OpenApi } from "effect/unstable/httpapi"
 import { Authorization } from "../middleware/authorization"
 import { InstanceContextMiddleware } from "../middleware/instance-context"
 import {
@@ -98,6 +98,7 @@ export const FilePaths = {
   findSymbol: "/find/symbol",
   list: "/file",
   content: "/file/content",
+  download: "/file/download",
   status: "/file/status",
 } as const
 
@@ -153,6 +154,16 @@ export const FileApi = HttpApi.make("file")
             identifier: "file.read",
             summary: "Read file",
             description: "Read the content of a specified file.",
+          }),
+        ),
+        HttpApiEndpoint.get("download", FilePaths.download, {
+          query: FileQuery,
+          success: Schema.String.pipe(HttpApiSchema.asText({ contentType: "application/octet-stream" })),
+        }).annotateMerge(
+          OpenApi.annotations({
+            identifier: "file.download",
+            summary: "Download file",
+            description: "Download a file as an attachment, e.g. to fetch a large audiobook without loading it into memory.",
           }),
         ),
         HttpApiEndpoint.get("status", FilePaths.status, {

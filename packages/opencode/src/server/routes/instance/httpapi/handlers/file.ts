@@ -6,9 +6,11 @@ import { FSUtil } from "@opencode-ai/core/fs-util"
 import { Location } from "@opencode-ai/core/location"
 import { AbsolutePath, RelativePath } from "@opencode-ai/core/schema"
 import { Effect, Layer, Option } from "effect"
+import * as Stream from "effect/Stream"
 import ignore from "ignore"
 import path from "path"
 import { HttpApiBuilder } from "effect/unstable/httpapi"
+import { HttpServerResponse } from "effect/unstable/http"
 import { InstanceHttpApi } from "../api"
 
 export const fileHandlers = HttpApiBuilder.group(InstanceHttpApi, "file", (handlers) =>
@@ -128,12 +130,32 @@ export const fileHandlers = HttpApiBuilder.group(InstanceHttpApi, "file", (handl
       return []
     })
 
+    const download = Effect.fn("FileHttpApi.download")(function* (ctx: { query: { path: string } }) {
+      const directory = (yield* InstanceState.context).directory
+      const file = path.resolve(directory, ctx.query.path)
+      if (!FSUtil.contains(directory, file)) return yield* Effect.die(new Error("Path escapes the location"))
+      const exists = yield* FSUtil.Service.use((fs) => fs.existsSafe(file)).pipe(Effect.orDie)
+      if (!exists) return HttpServerResponse.empty({ status: 404 })
+      const item = yield* filesystem(
+        FileSystem.Service.use((fs) => fs.read({ path: RelativePath.make(ctx.query.path) })),
+      ).pipe(Effect.orDie)
+      const name = path.basename(file)
+      const encoded = encodeURIComponent(name).replace(/['()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
+      return HttpServerResponse.stream(Stream.fromIterable([item.content]), {
+        headers: {
+          "Content-Type": item.mime ?? "application/octet-stream",
+          "Content-Disposition": `attachment; filename="${name}"; filename*=UTF-8''${encoded}`,
+        },
+      })
+    })
+
     return handlers
       .handle("findText", findText)
       .handle("findFile", findFile)
       .handle("findSymbol", findSymbol)
       .handle("list", list)
       .handle("content", content)
+      .handleRaw("download", download)
       .handle("status", status)
   }),
 ).pipe(Layer.provide(locationServiceMapLayer))
