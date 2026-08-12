@@ -70,6 +70,17 @@ const debugTerminal = (...values: unknown[]) => {
   console.debug("[terminal]", ...values)
 }
 
+const disableAutocorrect = (el: HTMLElement) => {
+  el.setAttribute("autocorrect", "off")
+  el.setAttribute("autocomplete", "off")
+  el.setAttribute("spellcheck", "false")
+  el.setAttribute("inputmode", "text")
+  el.setAttribute("autocapitalize", "none")
+  el.setAttribute("data-gramm", "false")
+  el.setAttribute("data-enable-grammarly", "false")
+  el.setAttribute("data-no-gramme", "true")
+}
+
 const resolveV2Token = (tokens: ResolvedV2Theme, key: string) => {
   let current = tokens[key]
   for (let i = 0; i < 8 && current; i++) {
@@ -449,6 +460,10 @@ export const Terminal = (props: TerminalProps) => {
 
       const active = document.activeElement
       t.open(container)
+      if (t.textarea) disableAutocorrect(t.textarea)
+      requestAnimationFrame(() => {
+        if (t.textarea) disableAutocorrect(t.textarea)
+      })
       useTerminalUiBindings({
         container,
         term: t,

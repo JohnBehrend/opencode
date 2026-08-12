@@ -1,6 +1,7 @@
 import { For, Show, createEffect, createMemo, on, onCleanup, onMount } from "solid-js"
 import { createStore } from "solid-js/store"
 import { makeEventListener } from "@solid-primitives/event-listener"
+import { createMediaQuery } from "@solid-primitives/media"
 import { Tabs } from "@opencode-ai/ui/tabs"
 import { ResizeHandle } from "@opencode-ai/ui/resize-handle"
 import { IconButton } from "@opencode-ai/ui/icon-button"
@@ -22,7 +23,7 @@ import { createSizing, focusTerminalById } from "@/pages/session/helpers"
 import { getTerminalHandoff, setTerminalHandoff } from "@/pages/session/handoff"
 import { useSessionLayout } from "@/pages/session/session-layout"
 
-export function TerminalPanel() {
+export function TerminalPanel(props: { forceOpened?: boolean }) {
   const delays = [120, 240]
   const layout = useLayout()
   const terminal = useTerminal()
@@ -32,7 +33,9 @@ export function TerminalPanel() {
   const settings = useSettings()
   const { workspaceKey, view } = useSessionLayout()
 
+  const isDesktop = createMediaQuery("(min-width: 768px)")
   const opened = createMemo(() => view().terminal.opened())
+  const effectiveOpened = createMemo(() => props.forceOpened || opened())
   const size = createSizing()
   const height = createMemo(() => layout.terminal.height())
   const close = () => view().terminal.close()
@@ -62,7 +65,7 @@ export function TerminalPanel() {
   })
 
   createEffect(() => {
-    if (!opened()) {
+    if (!effectiveOpened()) {
       setStore("autoCreated", false)
       return
     }
@@ -77,7 +80,7 @@ export function TerminalPanel() {
       () => terminal.all().length,
       (count, prevCount) => {
         if (prevCount === undefined || prevCount <= 0 || count !== 0) return
-        if (!opened()) return
+        if (!effectiveOpened()) return
         close()
       },
     ),
@@ -118,7 +121,7 @@ export function TerminalPanel() {
   )
 
   createEffect(() => {
-    if (opened()) return
+    if (effectiveOpened()) return
     const active = document.activeElement
     if (!(active instanceof HTMLElement)) return
     if (!root?.contains(active)) return
@@ -196,20 +199,23 @@ export function TerminalPanel() {
     })
   }
 
+  const fullScreen = () => props.forceOpened && !isDesktop()
+
   return (
     <div
       ref={root}
       id="terminal-panel"
       role="region"
       aria-label={language.t("terminal.title")}
-      aria-hidden={!opened()}
-      inert={!opened()}
+      aria-hidden={!effectiveOpened()}
+      inert={!effectiveOpened()}
       class="relative w-full shrink-0 bg-background-stronger"
       classList={{
+        "h-full overflow-hidden": fullScreen(),
         "transition-[height] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[height] motion-reduce:transition-none":
-          !size.active(),
+          !size.active() && !fullScreen(),
       }}
-      style={{ height: opened() ? `${pane()}px` : "0px" }}
+      style={fullScreen() ? undefined : { height: effectiveOpened() ? `${pane()}px` : "0px" }}
     >
       <div class="hidden md:block" onPointerDown={() => size.start()}>
         <ResizeHandle
@@ -231,10 +237,11 @@ export function TerminalPanel() {
       <div
         class="absolute inset-x-0 top-0 flex flex-col overflow-hidden"
         classList={{
-          "border-t border-border-weak-base": opened(),
-          "pointer-events-none": !opened(),
+          "border-t border-border-weak-base": effectiveOpened(),
+          "pointer-events-none": !effectiveOpened(),
+          "!absolute !inset-0 !h-full": fullScreen(),
         }}
-        style={{ height: `${pane()}px` }}
+        style={fullScreen() ? undefined : { height: `${pane()}px` }}
       >
         <Show
           when={terminal.ready()}
@@ -295,7 +302,7 @@ export function TerminalPanel() {
                 </Tabs.List>
               </Tabs>
               <div class="flex-1 min-h-0 relative">
-                <Show when={opened() && terminal.active()} keyed>
+                <Show when={effectiveOpened() && terminal.active()} keyed>
                   {(id) => {
                     const ops = terminal.bind()
                     return (
@@ -304,7 +311,7 @@ export function TerminalPanel() {
                           <div id={`terminal-wrapper-${id}`} class="absolute inset-0">
                             <Terminal
                               pty={pty()}
-                              autoFocus={opened()}
+                              autoFocus={effectiveOpened()}
                               onAutoFocus={() => terminal.consumeFocus(id)}
                               onConnect={() => markTerminalConnected(terminalRecoveryKey(pty()), id, ops.trim)}
                               onCleanup={ops.update}
