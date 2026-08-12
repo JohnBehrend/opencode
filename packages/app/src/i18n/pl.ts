@@ -606,6 +606,8 @@ export const dict = {
   "toast.model.none.description": "Połącz dostawcę, aby podsumować tę sesję",
   "toast.file.loadFailed.title": "Nie udało się załadować pliku",
   "toast.file.listFailed.title": "Nie udało się wyświetlić listy plików",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Brak zaznaczenia linii",
   "toast.context.noLineSelection.description": "Najpierw wybierz zakres linii w zakładce pliku.",
   "toast.session.share.copyFailed.title": "Nie udało się skopiować adresu URL do schowka",

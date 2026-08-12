@@ -648,6 +648,8 @@ export const dict = {
   "toast.file.loadFailed.title": "Neuspjelo učitavanje datoteke",
   "toast.file.listFailed.title": "Neuspješno listanje datoteka",
 
+  "file.download": "Download",
+
   "toast.context.noLineSelection.title": "Nema odabranih linija",
   "toast.context.noLineSelection.description": "Prvo odaberi raspon linija u kartici datoteke.",
 

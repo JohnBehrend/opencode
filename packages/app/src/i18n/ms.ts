@@ -605,6 +605,8 @@ export const dict = {
   "toast.model.none.description": "Sambungkan penyedia untuk meringkaskan sesi ini",
   "toast.file.loadFailed.title": "Gagal memuat fail",
   "toast.file.listFailed.title": "Gagal menyenaraikan fail",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Tiada baris dipilih",
   "toast.context.noLineSelection.description": "Pilih julat baris dalam tab fail terlebih dahulu.",
   "toast.session.share.copyFailed.title": "Gagal menyalin URL ke papan klip",

@@ -20,12 +20,52 @@ import { useComments } from "@/context/comments"
 import { useLanguage } from "@/context/language"
 import { usePrompt } from "@/context/prompt"
 import { useSettings } from "@/context/settings"
+import { useSDK } from "@/context/sdk"
+import { useServerSDK } from "@/context/server-sdk"
 import { getSessionHandoff } from "@/pages/session/handoff"
 import { useSessionLayout } from "@/pages/session/session-layout"
 import { createSessionTabs } from "@/pages/session/helpers"
 
 type SessionFileViewProps = {
   tab: string
+}
+
+function FileDownloadButton(props: { path: string | undefined }) {
+  const sdk = useSDK()
+  const serverSDK = useServerSDK()
+  const language = useLanguage()
+
+  const download = () => {
+    const p = props.path
+    if (!p) return
+    const connection = serverSDK().server
+    const http = connection.http
+    const username = http?.username ?? "opencode"
+    const password = http?.password ?? ""
+    const token = btoa(`${username}:${password}`)
+    const url =
+      `${sdk().url}/file/download?path=${encodeURIComponent(p)}` +
+      `&directory=${encodeURIComponent(sdk().directory)}&auth_token=${encodeURIComponent(token)}`
+    const a = document.createElement("a")
+    a.href = url
+    a.download = p.split("/").pop() ?? "download"
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
+
+  return (
+    <div class="flex h-full flex-col items-center justify-center gap-3 text-center">
+      <div class="text-14-regular text-text-weak">{props.path}</div>
+      <button
+        type="button"
+        onClick={download}
+        class="rounded-md bg-surface-base px-4 py-2 text-14-regular hover:bg-surface-hover"
+      >
+        {language.t("file.download")}
+      </button>
+    </div>
+  )
 }
 
 const selectionSide = (range: SelectedLineRange) => range.endSide ?? range.side ?? "additions"
@@ -491,10 +531,14 @@ function SessionFileViewV1(props: { tab: string }) {
     </div>
   )
 
+  const isM4b = createMemo(() => path()?.toLowerCase().endsWith(".m4b") ?? false)
   const content = () => (
     <div class="mt-3 relative h-full min-h-0">
       <ScrollView class="h-full" viewportRef={scrollSync.setViewport} onScroll={scrollSync.handleScroll as any}>
         <Switch>
+          <Match when={isM4b()}>
+            <FileDownloadButton path={path()} />
+          </Match>
           <Match when={state()?.loaded}>{renderFile(contents())}</Match>
           <Match when={state()?.loading}>
             <div class="px-6 py-4 text-text-weak">{language.t("common.loading")}...</div>
@@ -782,10 +826,14 @@ function SessionFileViewV2(props: { tab: string }) {
     </div>
   )
 
+  const isM4b = createMemo(() => path()?.toLowerCase().endsWith(".m4b") ?? false)
   const content = () => (
     <div class="mt-3 relative h-full min-h-0">
       <ScrollView class="h-full" viewportRef={scrollSync.setViewport} onScroll={scrollSync.handleScroll as any}>
         <Switch>
+          <Match when={isM4b()}>
+            <FileDownloadButton path={path()} />
+          </Match>
           <Match when={state()?.loaded}>{renderFile(contents())}</Match>
           <Match when={state()?.loading}>
             <div class="px-6 py-4 text-text-weak">{language.t("common.loading")}...</div>

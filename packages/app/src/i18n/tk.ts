@@ -606,6 +606,8 @@ export const dict = {
   "toast.model.none.description": "Bu sessiýany jemlemek üçin üpjün edijini birikdiriň",
   "toast.file.loadFailed.title": "Faýl ýükläp bilmedi",
   "toast.file.listFailed.title": "Faýllary sanap bilmedi",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Setir saýlamasy ýok",
   "toast.context.noLineSelection.description": "Ilki bilen faýl goýmasynda setir aralygyny saýlaň.",
   "toast.session.share.copyFailed.title": "URL buferine göçürip bilmedi",

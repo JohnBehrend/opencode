@@ -615,6 +615,8 @@ export const dict = {
   "toast.model.none.description": "اس سیشن دا خلاصہ کرن لئی کسے پرووائیڈر نال جڑو",
   "toast.file.loadFailed.title": "فائل لوڈ کرن چ ناکامی ہوئی",
   "toast.file.listFailed.title": "فائلاں دی فہرست بنان چ ناکام رہیا",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "کوئی لائن سلیکشن نئیں",
   "toast.context.noLineSelection.description": "پہلے فائل ٹیب چ اک لائن رینج منتخب کرو۔",
   "toast.session.share.copyFailed.title": "کلپ بورڈ تے URL کاپی کرن چ ناکام رہیا",

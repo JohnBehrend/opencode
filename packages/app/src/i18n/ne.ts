@@ -606,6 +606,8 @@ export const dict: Record<string, string> = {
   "toast.model.none.description": "यो सत्र संक्षेप गर्न प्रदायक जडान गर्नुहोस्",
   "toast.file.loadFailed.title": "फाइल लोड गर्न असफल भयो",
   "toast.file.listFailed.title": "फाइलहरू सूचीबद्ध गर्न असफल भयो",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "कुनै लाइन चयन छैन",
   "toast.context.noLineSelection.description": "पहिले फाइल ट्याबमा रेखा दायरा चयन गर्नुहोस्।",
   "toast.session.share.copyFailed.title": "URL लाई क्लिपबोर्डमा प्रतिलिपि गर्न असफल भयो",

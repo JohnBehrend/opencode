@@ -609,6 +609,8 @@ export const dict = {
   "toast.model.none.description": "Συνδέστε έναν πάροχο για να συνοψίσετε αυτήν τη συνεδρία",
   "toast.file.loadFailed.title": "Αποτυχία φόρτωσης αρχείου",
   "toast.file.listFailed.title": "Απέτυχε η λίστα αρχείων",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Χωρίς επιλογή γραμμής",
   "toast.context.noLineSelection.description": "Επιλέξτε ένα εύρος γραμμής σε μια καρτέλα αρχείου πρώτα.",
   "toast.session.share.copyFailed.title": "Αποτυχία αντιγραφής του URL στο πρόχειρο",

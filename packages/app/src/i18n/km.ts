@@ -604,6 +604,8 @@ export const dict = {
   "toast.model.none.description": "ភ្ជាប់អ្នកផ្តល់សេវាដើម្បីសង្ខេបសម័យនេះ។",
   "toast.file.loadFailed.title": "បរាជ័យក្នុងការផ្ទុកឯកសារ",
   "toast.file.listFailed.title": "បរាជ័យក្នុងបញ្ជីឯកសារ",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "គ្មានការជ្រើសរើសបន្ទាត់ទេ។",
   "toast.context.noLineSelection.description": "ជ្រើសរើសជួរបន្ទាត់ក្នុងផ្ទាំងឯកសារជាមុនសិន។",
   "toast.session.share.copyFailed.title": "បរាជ័យក្នុងការចម្លង URL ទៅក្ដារតម្បៀតខ្ទាស់",

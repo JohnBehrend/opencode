@@ -519,6 +519,8 @@ export const dict = {
   "toast.model.none.description": "Connetti un provider per riepilogare questa sessione",
   "toast.file.loadFailed.title": "Impossibile caricare il file",
   "toast.file.listFailed.title": "Impossibile elencare i file",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Nessuna riga selezionata",
   "toast.context.noLineSelection.description": "Selezionare prima un intervallo di righe nella scheda di un file.",
   "toast.session.share.copyFailed.title": "Impossibile copiare l'URL negli appunti",

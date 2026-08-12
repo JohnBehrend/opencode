@@ -611,6 +611,8 @@ export const dict = {
   "toast.model.none.description": "ဤစက်ရှင်ကို အကျဉ်းချုပ်ရန် ဝန်ဆောင်မှုပေးသူကို ချိတ်ဆက်ပါ။",
   "toast.file.loadFailed.title": "ဖိုင်ကို တင်ရန် မအောင်မြင်ပါ။",
   "toast.file.listFailed.title": "ဖိုင်များကို စာရင်းပြုစုရန် မအောင်မြင်ပါ။",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "လိုင်းရွေးချယ်မှု မရှိပါ။",
   "toast.context.noLineSelection.description": "ဖိုင်တဘ်ရှိ မျဉ်းအပိုင်းအခြားကို ဦးစွာရွေးချယ်ပါ။",
   "toast.session.share.copyFailed.title": "URL ကို ကလစ်ဘုတ်သို့ ကူးယူရန် မအောင်မြင်ပါ။",

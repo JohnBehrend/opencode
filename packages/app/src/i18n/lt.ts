@@ -611,6 +611,8 @@ export const dict = {
   "toast.model.none.description": "Prisijunkite prie teikėjo, kad apibendrintumėte šią sesiją",
   "toast.file.loadFailed.title": "Nepavyko įkelti failo",
   "toast.file.listFailed.title": "Nepavyko įtraukti failų sąrašo",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Nėra linijos pasirinkimo",
   "toast.context.noLineSelection.description": "Pirmiausia failo skirtuke pasirinkite eilučių diapazoną.",
   "toast.session.share.copyFailed.title": "Nepavyko nukopijuoti URL į mainų sritį",

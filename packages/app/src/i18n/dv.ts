@@ -613,6 +613,8 @@ export const dict = {
   "toast.model.none.description": "މި ސެޝަން ޚުލާޞާ ކުރުމަށް ޕްރޮވައިޑަރަކާ ގުޅުވާށެވެ",
   "toast.file.loadFailed.title": "ފައިލް ލޯޑް ނުކުރެވުނެވެ",
   "toast.file.listFailed.title": "ފައިލްތައް ލިސްޓް ނުކުރެވުނެވެ",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "ލައިން ސެލެކްޝަނެއް ނެތެވެ",
   "toast.context.noLineSelection.description": "ފުރަތަމަ ފައިލް ޓެބެއްގައި ލައިން ރޭންޖެއް ހޮވާށެވެ.",
   "toast.session.share.copyFailed.title": "URL ކްލިޕްބޯޑަށް ކޮޕީ ނުކުރެވުނެވެ",

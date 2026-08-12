@@ -661,6 +661,8 @@ export const dict = {
   "toast.file.loadFailed.title": "Не вдалося завантажити файл",
   "toast.file.listFailed.title": "Не вдалося отримати список файлів",
 
+  "file.download": "Download",
+
   "toast.context.noLineSelection.title": "Не вибрано рядків",
   "toast.context.noLineSelection.description": "Спочатку виберіть діапазон рядків у вкладці файлу.",
 

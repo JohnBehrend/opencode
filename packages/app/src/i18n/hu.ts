@@ -610,6 +610,8 @@ export const dict = {
   "toast.model.none.description": "Csatlakozzon egy szolgáltatóhoz a munkamenet összefoglalásához",
   "toast.file.loadFailed.title": "Nem sikerült betölteni a fájlt",
   "toast.file.listFailed.title": "Nem sikerült listázni a fájlokat",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Nincs vonalválasztás",
   "toast.context.noLineSelection.description": "Először válasszon ki egy sortartományt egy fájl lapon.",
   "toast.session.share.copyFailed.title": "Nem sikerült a URL vágólapra másolása",

@@ -611,6 +611,8 @@ export const dict = {
   "toast.model.none.description": "Maak verbinding met een aanbieder om deze sessie samen te vatten",
   "toast.file.loadFailed.title": "Kan bestand niet laden",
   "toast.file.listFailed.title": "Kan bestanden niet weergeven",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Geen regels geselecteerd",
   "toast.context.noLineSelection.description": "Selecteer eerst een reeks regels in een bestandstabblad.",
   "toast.session.share.copyFailed.title": "Kan de URL niet naar het klembord kopiëren",

@@ -609,6 +609,8 @@ export const dict = {
   "toast.model.none.description": "Tengdu þjónustuaðila til að draga saman þessa lotu",
   "toast.file.loadFailed.title": "Mistókst að hlaða skrá",
   "toast.file.listFailed.title": "Mistókst að skrá skrár",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Ekkert línuval",
   "toast.context.noLineSelection.description": "Veldu línusvið í skráarflipa fyrst.",
   "toast.session.share.copyFailed.title": "Mistókst að afrita URL á klemmuspjald",

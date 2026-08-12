@@ -609,6 +609,8 @@ export const dict = {
   "toast.model.none.description": "Connecteu un proveïdor per resumir aquesta sessió",
   "toast.file.loadFailed.title": "No s'ha pogut carregar el fitxer",
   "toast.file.listFailed.title": "No s'han pogut llistar els fitxers",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Sense selecció de línia",
   "toast.context.noLineSelection.description": "Seleccioneu primer un interval de línies en una pestanya de fitxer.",
   "toast.session.share.copyFailed.title": "No s'ha pogut copiar URL al porta-retalls",

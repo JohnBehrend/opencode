@@ -608,6 +608,8 @@ export const dict = {
   "toast.model.none.description": "Ushbu seansni yakunlash uchun provayderni ulang",
   "toast.file.loadFailed.title": "Faylni yuklab boʻlmadi",
   "toast.file.listFailed.title": "Fayllarni roʻyxatga kiritib boʻlmadi",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Qator tanlovi yo'q",
   "toast.context.noLineSelection.description": "Avval fayl yorlig'ida qator oralig'ini tanlang.",
   "toast.session.share.copyFailed.title": "URLni vaqtinchalik xotiraga nusxalab boʻlmadi",

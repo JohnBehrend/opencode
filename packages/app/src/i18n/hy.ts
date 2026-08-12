@@ -609,6 +609,8 @@ export const dict = {
   "toast.model.none.description": "Միացրեք մատակարարին՝ այս նիստն ամփոփելու համար",
   "toast.file.loadFailed.title": "Չհաջողվեց բեռնել ֆայլը",
   "toast.file.listFailed.title": "Չհաջողվեց ցուցակագրել ֆայլերը",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Տող չկա",
   "toast.context.noLineSelection.description": "Ընտրեք տողերի տիրույթը ֆայլի ներդիրում:",
   "toast.session.share.copyFailed.title": "Չհաջողվեց պատճենել URL-ը սեղմատախտակում",

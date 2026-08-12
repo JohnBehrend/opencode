@@ -608,6 +608,8 @@ export const dict = {
   "toast.model.none.description": "Барои ҷамъбасти ин сессия провайдерро пайваст кунед",
   "toast.file.loadFailed.title": "Файлро бор карда натавонист",
   "toast.file.listFailed.title": "Рӯйхати файлҳо муяссар нашуд",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Интихоби сатр нест",
   "toast.context.noLineSelection.description": "Аввал дар ҷадвали файл диапазони сатрро интихоб кунед.",
   "toast.session.share.copyFailed.title": "URL ба буфер нусхабардорӣ карда нашуд",

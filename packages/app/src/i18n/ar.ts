@@ -602,6 +602,8 @@ export const dict = {
   "toast.model.none.description": "قم بتوصيل موفر لتلخيص هذه الجلسة",
   "toast.file.loadFailed.title": "فشل تحميل الملف",
   "toast.file.listFailed.title": "فشل سرد الملفات",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "لا يوجد تحديد للأسطر",
   "toast.context.noLineSelection.description": "حدد نطاق أسطر في تبويب ملف أولاً.",
   "toast.session.share.copyFailed.title": "فشل نسخ عنوان URL إلى الحافظة",

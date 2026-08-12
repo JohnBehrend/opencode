@@ -606,6 +606,8 @@ export const dict = {
   "toast.model.none.description": "Povežite ponudnika, da povzamete to sejo",
   "toast.file.loadFailed.title": "Datoteke ni bilo mogoče naložiti",
   "toast.file.listFailed.title": "Seznam datotek ni uspel",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Brez izbire vrstice",
   "toast.context.noLineSelection.description": "Najprej izberite obseg vrstic na zavihku datoteke.",
   "toast.session.share.copyFailed.title": "URL ni bilo mogoče kopirati v odložišče",

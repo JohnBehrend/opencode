@@ -596,6 +596,8 @@ export const dict = {
   "toast.model.none.description": "ይህን ክፍለ ጊዜ ለማጠቃለል አቅራቢን ያገናኙ",
   "toast.file.loadFailed.title": "ፋይሉን መጫን አልተቻለም",
   "toast.file.listFailed.title": "ፋይሎችን መዘርዘር አልተሳካም",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "የመስመር ምርጫ የለም",
   "toast.context.noLineSelection.description": "በመጀመሪያ በፋይል ትር ውስጥ የመስመር ክልልን ይምረጡ።",
   "toast.session.share.copyFailed.title": "URLን ወደ ቅንጥብ ሰሌዳ መቅዳት አልተሳካም",

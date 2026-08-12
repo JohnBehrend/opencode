@@ -615,6 +615,8 @@ export const dict = {
   "toast.model.none.description": "Kết nối nhà cung cấp để tóm tắt phiên này",
   "toast.file.loadFailed.title": "Không tải được tệp",
   "toast.file.listFailed.title": "Không thể liệt kê các tệp",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Không có lựa chọn dòng",
   "toast.context.noLineSelection.description": "Trước tiên, hãy chọn một phạm vi dòng trong tab tệp.",
   "toast.session.share.copyFailed.title": "Không sao chép được URL vào bảng tạm",

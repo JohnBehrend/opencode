@@ -606,6 +606,8 @@ export const dict = {
   "toast.model.none.description": "Chcete-li tuto relaci shrnout, připojte poskytovatele",
   "toast.file.loadFailed.title": "Soubor se nepodařilo načíst",
   "toast.file.listFailed.title": "Seznam souborů se nezdařil",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Žádný výběr řádku",
   "toast.context.noLineSelection.description": "Nejprve vyberte rozsah řádků na kartě souboru.",
   "toast.session.share.copyFailed.title": "Zkopírování URL do schránky se nezdařilo",

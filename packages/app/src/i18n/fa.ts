@@ -605,6 +605,8 @@ export const dict = {
   "toast.model.none.description": "برای خلاصه کردن این جلسه یک ارائه دهنده را وصل کنید",
   "toast.file.loadFailed.title": "فایل بارگیری نشد",
   "toast.file.listFailed.title": "لیست کردن فایل ها انجام نشد",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "بدون انتخاب خط",
   "toast.context.noLineSelection.description": "ابتدا یک محدوده خط را در یک برگه فایل انتخاب کنید.",
   "toast.session.share.copyFailed.title": "URL در کلیپ بورد کپی نشد",

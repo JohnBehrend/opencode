@@ -552,6 +552,8 @@ export const dict = {
   "toast.file.loadFailed.title": "Kunne ikke laste fil",
   "toast.file.listFailed.title": "Kunne ikke liste filer",
 
+  "file.download": "Download",
+
   "toast.context.noLineSelection.title": "Ingen linjevalg",
   "toast.context.noLineSelection.description": "Velg først et linjeområde i en filfane.",
 

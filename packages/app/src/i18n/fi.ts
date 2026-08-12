@@ -501,6 +501,8 @@ export const dict = {
   "toast.model.none.description": "Yhdistä palveluntarjoaja tehdäksesi yhteenvedon tästä istunnosta",
   "toast.file.loadFailed.title": "Tiedoston lataaminen epäonnistui",
   "toast.file.listFailed.title": "Tiedostojen luettelointi epäonnistui",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Ei rivivalintaa",
   "toast.context.noLineSelection.description": "Valitse ensin riviväli tiedostovälilehdeltä.",
   "toast.session.share.copyFailed.title": "URL-osoitteen kopioiminen leikepöydälle epäonnistui",

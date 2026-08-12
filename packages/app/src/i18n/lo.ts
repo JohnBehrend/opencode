@@ -602,6 +602,8 @@ export const dict = {
   "toast.model.none.description": "ເຊື່ອມຕໍ່ຜູ້ໃຫ້ບໍລິການເພື່ອສະຫຼຸບກອງປະຊຸມນີ້",
   "toast.file.loadFailed.title": "ລົ້ມເຫລວໃນການໂຫຼດໄຟລ໌",
   "toast.file.listFailed.title": "ລົ້ມເຫລວໃນລາຍການໄຟລ໌",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "ບໍ່ມີການເລືອກແຖວ",
   "toast.context.noLineSelection.description": "ເລືອກໄລຍະແຖວໃນແຖບໄຟລ໌ກ່ອນ.",
   "toast.session.share.copyFailed.title": "ລົ້ມເຫລວໃນການສຳເນົາ URL ໄປໃສ່ຄລິບບອດ",

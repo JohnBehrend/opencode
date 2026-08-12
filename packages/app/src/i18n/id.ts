@@ -657,6 +657,8 @@ export const dict = {
   "toast.file.loadFailed.title": "Gagal memuat berkas",
   "toast.file.listFailed.title": "Gagal mendaftar berkas",
 
+  "file.download": "Download",
+
   "toast.context.noLineSelection.title": "Tidak ada pilihan baris",
   "toast.context.noLineSelection.description": "Pilih rentang baris di tab berkas terlebih dahulu.",
 

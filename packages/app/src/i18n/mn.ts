@@ -609,6 +609,8 @@ export const dict = {
   "toast.model.none.description": "Энэ сессийг дүгнэхийн тулд үйлчилгээ үзүүлэгчийг холбоно уу",
   "toast.file.loadFailed.title": "Файлыг ачаалж чадсангүй",
   "toast.file.listFailed.title": "Файлуудыг жагсааж чадсангүй",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Шугамын сонголт байхгүй",
   "toast.context.noLineSelection.description": "Эхлээд файлын табаас мөрийн мужийг сонгоно уу.",
   "toast.session.share.copyFailed.title": "URL-г санах ой руу хуулж чадсангүй",

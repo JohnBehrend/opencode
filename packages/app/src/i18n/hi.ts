@@ -614,6 +614,8 @@ export const dict = {
   "toast.model.none.description": "इस सेशन को सारांशित करने के लिए एक प्रोवाइडर कनेक्ट करें",
   "toast.file.loadFailed.title": "फ़ाइल लोड करने में विफल",
   "toast.file.listFailed.title": "फ़ाइलें सूचीबद्ध करने में विफल",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "कोई पंक्ति चयन नहीं",
   "toast.context.noLineSelection.description": "पहले फ़ाइल टैब में एक पंक्ति श्रेणी का चयन करें।",
   "toast.session.share.copyFailed.title": "URL को क्लिपबोर्ड पर कॉपी करने में विफल",

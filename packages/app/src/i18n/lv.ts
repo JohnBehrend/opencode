@@ -605,6 +605,8 @@ export const dict = {
   "toast.model.none.description": "Pievienojiet nodrošinātāju, lai apkopotu šo sesiju",
   "toast.file.loadFailed.title": "Neizdevās ielādēt failu",
   "toast.file.listFailed.title": "Neizdevās uzskaitīt failus",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Nav izvēlētas rindas",
   "toast.context.noLineSelection.description": "Vispirms izvēlieties rindu diapazonu faila cilnē.",
   "toast.session.share.copyFailed.title": "Neizdevās kopēt URL starpliktuvē",

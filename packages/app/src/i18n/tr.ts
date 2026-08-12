@@ -651,6 +651,8 @@ export const dict = {
   "toast.file.loadFailed.title": "Dosya yüklenemedi",
   "toast.file.listFailed.title": "Dosyalar listelenemedi",
 
+  "file.download": "Download",
+
   "toast.context.noLineSelection.title": "Satır seçimi yok",
   "toast.context.noLineSelection.description": "Önce bir dosya sekmesinde satır aralığı seçin.",
 

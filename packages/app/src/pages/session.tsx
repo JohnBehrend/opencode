@@ -560,7 +560,7 @@ export default function Page() {
     if (!tab) return
 
     const path = file.pathFromTab(tab)
-    if (path) void file.load(path)
+    if (path && !path.endsWith(".m4b")) void file.load(path)
   })
 
   createEffect(
@@ -1159,7 +1159,9 @@ export default function Page() {
     tabForPath: file.tab,
     openTab: tabs().open,
     setActive: tabs().setActive,
-    loadFile: file.load,
+    loadFile: (path) => {
+      if (!path.endsWith(".m4b")) file.load(path)
+    },
   })
 
   const changesLabel = (option: ChangeMode) => {
@@ -1490,7 +1492,7 @@ export default function Page() {
         const tab = activeFileTab()
         if (!tab) return
         const path = file.pathFromTab(tab)
-        if (!path) return
+        if (!path || path.endsWith(".m4b")) return
         void file.load(path, { force: true })
       },
       { defer: true },

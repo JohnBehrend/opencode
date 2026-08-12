@@ -612,6 +612,8 @@ export const dict = {
   "toast.model.none.description": "Bu sessiyanı xülasə etmək üçün provayder qoşun",
   "toast.file.loadFailed.title": "Fayl yüklənə bilmədi",
   "toast.file.listFailed.title": "Fayllar siyahılana bilmədi",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Sətir seçimi yoxdur",
   "toast.context.noLineSelection.description": "Əvvəlcə fayl tabında sətir aralığı seçin.",
   "toast.session.share.copyFailed.title": "URL buferə kopyalana bilmədi",

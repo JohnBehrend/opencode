@@ -610,6 +610,8 @@ export const dict = {
   "toast.model.none.description": "Anslut en leverantör för att sammanfatta denna session",
   "toast.file.loadFailed.title": "Det gick inte att ladda filen",
   "toast.file.listFailed.title": "Det gick inte att lista filer",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Inget radval",
   "toast.context.noLineSelection.description": "Välj ett radintervall på en filflik först.",
   "toast.session.share.copyFailed.title": "Det gick inte att kopiera URL till urklipp",

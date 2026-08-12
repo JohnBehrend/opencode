@@ -602,6 +602,8 @@ export const dict = {
   "toast.model.none.description": "Seansi kokkuvõtte tegemiseks ühendage teenusepakkuja",
   "toast.file.loadFailed.title": "Faili laadimine ebaõnnestus",
   "toast.file.listFailed.title": "Failide loetlemine ebaõnnestus",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Rea valikut pole",
   "toast.context.noLineSelection.description": "Valige faili vahekaardilt esmalt reavahemik.",
   "toast.session.share.copyFailed.title": "URL lõikelauale kopeerimine ebaõnnestus",

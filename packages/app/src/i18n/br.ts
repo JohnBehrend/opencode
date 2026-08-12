@@ -606,6 +606,8 @@ export const dict = {
   "toast.model.none.description": "Conecte um provedor para resumir esta sessão",
   "toast.file.loadFailed.title": "Falha ao carregar arquivo",
   "toast.file.listFailed.title": "Falha ao listar arquivos",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Nenhuma seleção de linhas",
   "toast.context.noLineSelection.description": "Selecione primeiro um intervalo de linhas em uma aba de arquivo.",
   "toast.session.share.copyFailed.title": "Falha ao copiar URL para a área de transferência",

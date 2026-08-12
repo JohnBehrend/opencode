@@ -650,6 +650,8 @@ export const dict = {
   "toast.file.loadFailed.title": "Fallo al cargar archivo",
   "toast.file.listFailed.title": "Fallo al listar archivos",
 
+  "file.download": "Download",
+
   "toast.context.noLineSelection.title": "Sin selección de líneas",
   "toast.context.noLineSelection.description": "Primero selecciona un rango de líneas en una pestaña de archivo.",
 

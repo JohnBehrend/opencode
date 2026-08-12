@@ -606,6 +606,8 @@ export const dict = {
   "toast.model.none.description": "Повежите провајдера да бисте резимирали ову сесију",
   "toast.file.loadFailed.title": "Учитавање датотеке није успело",
   "toast.file.listFailed.title": "Неуспешно навођење датотека",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Нема избора линија",
   "toast.context.noLineSelection.description": "Прво изаберите опсег линија на картици датотеке.",
   "toast.session.share.copyFailed.title": "Копирање URL у међуспремник није успело",

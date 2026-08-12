@@ -607,6 +607,8 @@ export const dict = {
   "toast.model.none.description": "Lidhni një ofrues për të përmbledhur këtë sesion",
   "toast.file.loadFailed.title": "Ngarkimi i skedarit dështoi",
   "toast.file.listFailed.title": "Lista e skedarëve dështoi",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Nuk ka përzgjedhje rreshti",
   "toast.context.noLineSelection.description": "Së pari zgjidhni një varg rreshti në një skedë skedari.",
   "toast.session.share.copyFailed.title": "Kopjimi i URL në kujtesën e fragmenteve dështoi",

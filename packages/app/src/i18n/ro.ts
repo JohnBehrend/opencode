@@ -605,6 +605,8 @@ export const dict = {
   "toast.model.none.description": "Conectează un furnizor pentru a rezuma această sesiune",
   "toast.file.loadFailed.title": "Nu s-a putut încărca fișierul",
   "toast.file.listFailed.title": "Nu s-au putut lista fișierele",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Nicio linie selectată",
   "toast.context.noLineSelection.description": "Selectează mai întâi un interval de linii într-un tab de fișier.",
   "toast.session.share.copyFailed.title": "Nu s-a putut copia URL-ul în clipboard",

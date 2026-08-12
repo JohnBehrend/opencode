@@ -605,6 +605,8 @@ export const dict: Record<string, string> = {
   "toast.model.none.description": "এই সেশনের সংক্ষিপ্ত বিবরণ দিতে একজন প্রদানকারীকে সংযুক্ত করুন",
   "toast.file.loadFailed.title": "ফাইল লোড করতে ব্যর্থ হয়েছে",
   "toast.file.listFailed.title": "ফাইল তালিকা করতে ব্যর্থ হয়েছে",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "কোন লাইন নির্বাচন নেই",
   "toast.context.noLineSelection.description": "প্রথমে একটি ফাইল ট্যাবে একটি লাইন পরিসর নির্বাচন করুন।",
   "toast.session.share.copyFailed.title": "ক্লিপবোর্ডে URL অনুলিপি করতে ব্যর্থ হয়েছে৷",

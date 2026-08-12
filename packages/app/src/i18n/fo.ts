@@ -605,6 +605,8 @@ export const dict = {
   "toast.model.none.description": "Set samband við ein veitara fyri at taka saman um hesa setuna",
   "toast.file.loadFailed.title": "Tað eydnaðist ikki at heinta fíluna",
   "toast.file.listFailed.title": "Tað eydnaðist ikki at lista fílur",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Einki linjuval",
   "toast.context.noLineSelection.description": "Vel eitt linjuøki í einum fíluflipa fyrst.",
   "toast.session.share.copyFailed.title": "Tað eydnaðist ikki at avrita URL til klippiborð",

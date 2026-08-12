@@ -614,6 +614,8 @@ export const dict: Record<string, string> = {
   "toast.model.none.description": "ལཱ་ཡུན་འདི་བཅུད་བསྡུས་འབད་ནིའི་དོན་ལུ་ བྱིན་མི་ཅིག་མཐུད།",
   "toast.file.loadFailed.title": "ཡིག་སྣོད་མངོན་གསལ་འབད་ནི་འཐུས་ཤོར་འབྱུང་ཡོདཔ།",
   "toast.file.listFailed.title": "ཡིག་སྣོད་ཚུ་ཐོ་བཀོད་འབད་ནི་ལུ་འཐུས་ཤོར་འབྱུང་ཡོདཔ།",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "གྲལ་ཐིག་སེལ་འཐུ་མེད།",
   "toast.context.noLineSelection.description": "དང་པ་རང་ ཡིག་སྣོད་མཆོང་ལྡེ་ཅིག་ནང་གྲལ་ཐིག་ཁྱབ་ཚད་ཅིག་སེལ་འཐུ་འབད།",
   "toast.session.share.copyFailed.title": "URLའདི་འཛིན་པང་ལུ་འདྲ་བཤུས་རྐྱབ་ནི་ལུ་འཐུས་ཤོར་འབྱུང་ཡོདཔ།",

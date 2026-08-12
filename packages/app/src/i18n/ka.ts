@@ -605,6 +605,8 @@ export const dict = {
   "toast.model.none.description": "დააკავშირეთ პროვაიდერი ამ სესიის შესაჯამებლად",
   "toast.file.loadFailed.title": "ფაილის ჩატვირთვა ვერ მოხერხდა",
   "toast.file.listFailed.title": "ფაილების სია ვერ მოხერხდა",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "ხაზი არ არის მონიშნული",
   "toast.context.noLineSelection.description": "აირჩიეთ ხაზის დიაპაზონი ჯერ ფაილის ჩანართში.",
   "toast.session.share.copyFailed.title": "ვერ მოხერხდა URL-ის კოპირება ბუფერში",

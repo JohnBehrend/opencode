@@ -611,6 +611,8 @@ export const dict = {
   "toast.model.none.description": "Povežite se s pružateljem usluga kako biste rezimirali ovu sesiju",
   "toast.file.loadFailed.title": "Učitavanje datoteke nije uspjelo",
   "toast.file.listFailed.title": "Popis datoteka nije uspio",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Bez odabira linije",
   "toast.context.noLineSelection.description": "Najprije odaberite raspon redaka na kartici datoteke.",
   "toast.session.share.copyFailed.title": "Kopiranje URL u međuspremnik nije uspjelo",

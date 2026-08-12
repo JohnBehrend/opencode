@@ -604,6 +604,8 @@ export const dict: Record<string, string> = {
   "toast.model.none.description": "මෙම සැසිය සාරාංශ කිරීමට සැපයුම්කරුවෙකු සම්බන්ධ කරන්න",
   "toast.file.loadFailed.title": "ගොනුව පූරණය කිරීමට අසමත් විය",
   "toast.file.listFailed.title": "ගොනු ලැයිස්තුගත කිරීමට අසමත් විය",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "රේඛා තේරීමක් නැත",
   "toast.context.noLineSelection.description": "පළමුව ගොනු පටිත්තක රේඛා පරාසයක් තෝරන්න.",
   "toast.session.share.copyFailed.title": "පසුරු පුවරුවට URL පිටපත් කිරීමට අසමත් විය",

@@ -604,6 +604,8 @@ export const dict = {
   "toast.model.none.description": "Pripojte poskytovateľa na zhrnutie tejto relácie",
   "toast.file.loadFailed.title": "Nepodarilo sa načítať súbor",
   "toast.file.listFailed.title": "Nepodarilo sa zobraziť zoznam súborov",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Nie je vybraný riadok",
   "toast.context.noLineSelection.description": "Najprv vyberte rozsah riadkov na karte súboru.",
   "toast.session.share.copyFailed.title": "Nepodarilo sa skopírovať URL do schránky",

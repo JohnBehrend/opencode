@@ -610,6 +610,8 @@ export const dict = {
   "toast.model.none.description": "Свържете доставчик, за да обобщите тази сесия",
   "toast.file.loadFailed.title": "Неуспешно зареждане на файла",
   "toast.file.listFailed.title": "Неуспешно изброяване на файлове",
+
+  "file.download": "Download",
   "toast.context.noLineSelection.title": "Няма избор на линия",
   "toast.context.noLineSelection.description": "Първо изберете диапазон от редове в раздел на файл.",
   "toast.session.share.copyFailed.title": "Неуспешно копиране на URL в клипборда",
