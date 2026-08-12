@@ -1,17 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "provider": {},
-  "permission": {},
-  "references": {
-    "effect": {
-      "repository": "github.com/Effect-TS/effect-smol",
-      "description": "Use for Effect v4 and effect-smol implementation details",
-    },
-    "opencode-local": {
-      "path": "~/.local/share/opencode",
-      "description": "Contains opencode logs and data",
-    },
+  "provider": {
+  "local": {
+  	   "npm":  "@ai-sdk/openai",
+  	   "options": {"baseURL": "http://localhost:2136/v1"},
+  	   "models":{"coder-model":{"name":"Local VLLM","attachment":false,"modalities":{"input":["text"],"output":["text"]}}}
   },
+},
+  "permission": {},
   "mcp": {},
   "tools": {
     "github-triage": false,
