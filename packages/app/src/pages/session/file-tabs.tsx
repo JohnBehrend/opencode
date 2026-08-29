@@ -34,36 +34,56 @@ function FileDownloadButton(props: { path: string | undefined }) {
   const sdk = useSDK()
   const serverSDK = useServerSDK()
   const language = useLanguage()
+  const [url, setUrl] = createSignal<string>()
 
-  const download = () => {
-    const p = props.path
-    if (!p) return
-    const connection = serverSDK().server
-    const http = connection.http
-    const username = http?.username ?? "opencode"
-    const password = http?.password ?? ""
-    const token = btoa(`${username}:${password}`)
-    const url =
-      `${sdk().url}/file/download?path=${encodeURIComponent(p)}` +
-      `&directory=${encodeURIComponent(sdk().directory)}&auth_token=${encodeURIComponent(token)}`
-    const a = document.createElement("a")
-    a.href = url
-    a.download = p.split("/").pop() ?? "download"
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
+  const promptForCredentials = () => {
+    const username = prompt(language.t("file.download.username"))
+    if (!username) return
+    const password = prompt(language.t("file.download.password"))
+    if (!password) return
+    return btoa(`${username}:${password}`)
   }
 
+  const buildUrl = () => {
+    const p = props.path
+    if (!p) return
+    const http = serverSDK().server.http
+    const token = http?.password
+      ? btoa(`${http.username ?? "opencode"}:${http.password}`)
+      : promptForCredentials()
+    if (!token) return
+    setUrl(
+      `${sdk().url}/file/download?path=${encodeURIComponent(p)}` +
+        `&directory=${encodeURIComponent(sdk().directory)}&auth_token=${encodeURIComponent(token)}`,
+    )
+  }
+
+  createEffect(() => {
+    if (serverSDK().server.http?.password) buildUrl()
+  })
+
   return (
-    <div class="flex h-full flex-col items-center justify-center gap-3 text-center">
+    <div class="flex h-full flex-col items-center justify-center gap-3 p-6 text-center">
       <div class="text-14-regular text-text-weak">{props.path}</div>
-      <button
-        type="button"
-        onClick={download}
-        class="rounded-md bg-surface-base px-4 py-2 text-14-regular hover:bg-surface-hover"
+      <Show
+        when={url()}
+        fallback={
+          <button
+            type="button"
+            onClick={buildUrl}
+            class="rounded-md bg-surface-base px-4 py-2 text-14-regular hover:bg-surface-hover"
+          >
+            {language.t("file.download")}
+          </button>
+        }
       >
-        {language.t("file.download")}
-      </button>
+        <a
+          href={url()}
+          class="break-all rounded-md bg-surface-base px-4 py-2 text-13-regular text-text-weak underline hover:bg-surface-hover"
+        >
+          {url()}
+        </a>
+      </Show>
     </div>
   )
 }

@@ -560,6 +560,8 @@ export const dict = {
   "toast.file.listFailed.title": "Failed to list files",
 
   "file.download": "Download",
+  "file.download.username": "Enter username for download:",
+  "file.download.password": "Enter password for download:",
 
   "toast.context.noLineSelection.title": "No line selection",
   "toast.context.noLineSelection.description": "Select a line range in a file tab first.",
